@@ -1,1 +1,1 @@
-# NewsApp
+# FandyNews-Task2

@@ -10,7 +10,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.fandy.news.R
@@ -52,7 +51,6 @@ class ArticleFragment : Fragment() {
 
         return binding.root
     }
-
 
 
     private fun setupOpenWebsiteButton() {

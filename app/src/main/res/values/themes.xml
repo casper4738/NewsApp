@@ -15,5 +15,13 @@
         <item name="toolbarStyle">@style/NewssterToolbar</item>
         <item name="collapsedTitleTextAppearance">@style/NewssterToolbarTitle</item>
     </style>
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="colorPrimary">@color/newssterPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/newssterPrimaryDarkColor</item>
+        <item name="colorAccent">@color/newssterSecondaryColor</item>
+        <item name="android:statusBarColor">@color/newssterSecondaryColor</item>
+    </style>
 </resources>
 

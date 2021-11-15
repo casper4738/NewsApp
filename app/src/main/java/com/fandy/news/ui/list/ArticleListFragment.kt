@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -18,12 +21,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-import android.widget.ArrayAdapter
-
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-
-
 @AndroidEntryPoint
 @ExperimentalPagingApi
 class ArticleListFragment : Fragment() {
@@ -31,7 +28,7 @@ class ArticleListFragment : Fragment() {
     private var job: Job? = null
     private lateinit var adapter: ArticleAdapter
     private var _binding: ArticleListFragmentBinding? = null
-    private val dropdownOptions = arrayOf("Top Headlines","All News")
+    private val dropdownOptions = arrayOf("Top Headlines", "All News")
 
     private val binding
         get() = _binding!!
@@ -48,6 +45,7 @@ class ArticleListFragment : Fragment() {
 
         return binding.root
     }
+
     private fun setupDropdown() {
 
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -58,7 +56,12 @@ class ArticleListFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.setAdapter(adapter)
         binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 when (position) {
                     0 -> {
                         getTopHeadlines()
@@ -75,7 +78,6 @@ class ArticleListFragment : Fragment() {
         }
 
     }
-
 
     private fun initAdapter() {
         adapter = ArticleAdapter()

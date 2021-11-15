@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Fandy News</string>
+    <string name="app_name" translatable="false">News App</string>
 
     <!-- Tools text -->
     <string name="title" translatable="false">Banks Won’t Rush to Hold Crypto – But OCC’s Regulatory Approval Makes It Harder to Ignore</string>
@@ -22,7 +22,7 @@
     <string name="health">Health</string>
     <string name="sport">Sport</string>
     <string name="technology">Technology</string>
-    <string name="headlines">Fandy News</string>
+    <string name="headlines">News App</string>
 
     <!-- Languages -->
     <string name="english">English</string>

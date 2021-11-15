@@ -3,8 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navgraph"
-    android:label="main_fragment"
-    app:startDestination="@id/articleListFragment">
+    android:label="login_fragment"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.fandy.news.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/action_loginFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/articleListFragment"
@@ -15,6 +25,7 @@
             android:id="@+id/action_articleListFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.fandy.news.ui.article.ArticleFragment"

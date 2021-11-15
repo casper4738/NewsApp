@@ -14,6 +14,11 @@ data class NewsResponse(
 )
 
 @JsonClass(generateAdapter = true)
+data class UserResponse(
+    @Json(name = "articles") val articleDTO: List<ArticleDTO>
+)
+
+@JsonClass(generateAdapter = true)
 data class ArticleDTO(
     val url: String?,
     val author: String?,

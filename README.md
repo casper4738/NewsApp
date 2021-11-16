@@ -1,5 +1,5 @@
 # Mini Project - News App
 
-Author : 
+Author :   
 Fandy  
 Al Edityan

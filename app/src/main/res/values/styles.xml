@@ -2,33 +2,33 @@
 <resources>
 
     <!-- Appbar -->
-    <style name="NewssterAppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="NewsappAppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <!-- Toolbar -->
-    <style name="NewssterToolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextAppearance">@style/NewssterToolbarTitle</item>
+    <style name="NewsappToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextAppearance">@style/NewsappToolbarTitle</item>
         <item name="elevation">4dp</item>
     </style>
 
     <!-- Menu Item. Set primary color for the text, so it's dark on light bg and vice versa -->
-    <style name="NewssterPopupOverlay" parent="ThemeOverlay.MaterialComponents">
+    <style name="NewsappPopupOverlay" parent="ThemeOverlay.MaterialComponents">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/newssterPrimaryTextColor</item>
+        <item name="android:textColor">@color/newsappPrimaryTextColor</item>
     </style>
 
     <!-- Retry button -->
-    <style name="NewssterButton" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/newssterSecondaryLightColor</item>
-        <item name="strokeColor">@color/newssterSecondaryColor</item>
+    <style name="NewsappButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/newsappSecondaryLightColor</item>
+        <item name="strokeColor">@color/newsappSecondaryColor</item>
         <item name="strokeWidth">0.8dp</item>
         <item name="shapeAppearance">?attr/shapeAppearanceMediumComponent</item>
     </style>
 
     <!-- Categories Picker Dialog -->
-    <style name="NewssterMaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="NewsappMaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/Newsster.Dialog.Title.Text</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/NewssterDialogBodyText</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Newsapp.Dialog.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/NewsappDialogBodyText</item>
         <item name="materialAlertDialogTitlePanelStyle">@style/TitlePaneStyleCenter</item>
         <item name="checkedTextViewStyle">@style/CheckedItemStyle</item>
         <item name="materialAlertDialogTitleIconStyle">@style/TitleIconStyleCenter</item>

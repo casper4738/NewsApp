@@ -10,7 +10,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        android:theme="@style/NewssterAppBarOverlay"
+        android:theme="@style/NewsappAppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true">
@@ -37,7 +37,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:popupTheme="@style/NewssterPopupOverlay"
+                app:popupTheme="@style/NewsappPopupOverlay"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"

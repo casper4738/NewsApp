@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Newsster.Headline4"
+        style="@style/Newsapp.Headline4"
         android:paddingHorizontal="@dimen/grid_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/source"
-            style="@style/Newsster.Overline"
+            style="@style/Newsapp.Overline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/grid_1"
@@ -42,7 +42,7 @@
 
         <TextView
             android:id="@+id/slash_text_view"
-            style="@style/Newsster.Overline"
+            style="@style/Newsapp.Overline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/grid_1"
@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/date"
-            style="@style/Newsster.Overline"
+            style="@style/Newsapp.Overline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/grid_1"
@@ -64,7 +64,7 @@
 
         <TextView
             android:id="@+id/author"
-            style="@style/Newsster.Body2"
+            style="@style/Newsapp.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/date"
@@ -74,7 +74,7 @@
 
     <TextView
         android:id="@+id/description"
-        style="@style/Newsster.Headline6"
+        style="@style/Newsapp.Headline6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/grid_2"
@@ -86,7 +86,7 @@
 
     <TextView
         android:id="@+id/content"
-        style="@style/Newsster.Body1"
+        style="@style/Newsapp.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/grid_2"
@@ -98,7 +98,7 @@
 
     <Button
         android:id="@+id/continue_reading_button"
-        style="@style/Newsster.TextButton"
+        style="@style/Newsapp.TextButton"
         android:layout_width="wrap_content"
         android:layout_marginStart="@dimen/grid_1"
         android:layout_height="wrap_content"

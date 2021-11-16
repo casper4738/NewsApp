@@ -4,60 +4,60 @@
     <!--Typography-->
 
     <!--Article Content-->
-    <style name="Newsster.Body1" parent="TextAppearance.MaterialComponents.Body1">
+    <style name="Newsapp.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/work_sans</item>
         <item name="lineHeight">24sp</item>
-        <item name="android:textColor">@color/newssterPrimaryTextColor</item>
+        <item name="android:textColor">@color/newsappPrimaryTextColor</item>
     </style>
 
     <!--Article Author-->
-    <style name="Newsster.Body2" parent="TextAppearance.MaterialComponents.Body2">
+    <style name="Newsapp.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/work_sans</item>
     </style>
 
     <!--Article Title-->
-    <style name="Newsster.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="Newsapp.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/work_sans_bold</item>
         <item name="lineHeight">40sp</item>
-        <item name="android:textColor">@color/newssterPrimaryTextColor</item>
+        <item name="android:textColor">@color/newsappPrimaryTextColor</item>
     </style>
 
     <!--Article Description-->
-    <style name="Newsster.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="Newsapp.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/work_sans_medium</item>
-        <item name="android:textColor">@color/newssterPrimaryTextColor</item>
+        <item name="android:textColor">@color/newsappPrimaryTextColor</item>
     </style>
 
     <!--Article Source, Article Date, Source in Article Item-->
-    <style name="Newsster.Overline" parent="TextAppearance.MaterialComponents.Overline">
+    <style name="Newsapp.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="fontFamily">@font/work_sans_semibold</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/newssterSecondaryColor</item>
+        <item name="android:textColor">@color/newsappSecondaryColor</item>
     </style>
 
     <!--Title in Article Item -->
-    <style name="Newsster.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <style name="Newsapp.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/work_sans_semibold</item>
     </style>
 
     <!-- Dialog Title -->
-    <style name="Newsster.Dialog.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text.CenterStacked">
+    <style name="Newsapp.Dialog.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text.CenterStacked">
         <item name="fontFamily">@font/work_sans_medium</item>
-        <item name="android:textColor">@color/newssterBlackTextColor</item>
+        <item name="android:textColor">@color/newsappBlackTextColor</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <!-- Dialog Body -->
-    <style name="NewssterDialogBodyText" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+    <style name="NewsappDialogBodyText" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
         <item name="fontFamily">@font/work_sans_medium</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">16dp</item>
-        <item name="android:textColor">@color/newssterPrimaryTextColor</item>
+        <item name="android:textColor">@color/newsappPrimaryTextColor</item>
     </style>
 
     <!-- TextButton in Article. Styled text only, so it matches article content, but behaves like a button -->
-    <style name="Newsster.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/newssterSecondaryColor</item>
+    <style name="Newsapp.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/newsappSecondaryColor</item>
         <item name="fontFamily">@font/work_sans</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">16sp</item>
@@ -66,7 +66,7 @@
     </style>
 
     <!-- Toolbar Title -->
-    <style name="NewssterToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="NewsappToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/work_sans_semibold</item>
     </style>
 </resources>

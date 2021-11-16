@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/NewssterAppBarOverlay"
+        android:theme="@style/NewsappAppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +27,7 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             app:contentInsetStart="0dp"
-            app:popupTheme="@style/NewssterPopupOverlay">
+            app:popupTheme="@style/NewsappPopupOverlay">
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -107,7 +107,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/retry_button"
-            style="@style/NewssterButton"
+            style="@style/NewsappButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/retry"

@@ -19,7 +19,7 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(app: Application): NewsDatabase {
         return Room
-            .databaseBuilder(app, NewsDatabase::class.java, "newsster_db")
+            .databaseBuilder(app, NewsDatabase::class.java, "newsapp_db")
             .fallbackToDestructiveMigration()
             .build()
     }

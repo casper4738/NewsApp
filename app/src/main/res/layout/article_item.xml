@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/source"
-        style="@style/Newsster.Overline"
+        style="@style/Newsapp.Overline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Newsster.Subtitle"
+        style="@style/Newsapp.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/grid_2"

@@ -1,1 +1,5 @@
-# FandyNews-Task2
+# Mini Project - News App
+
+Author : 
+Fandy
+Al Edityan

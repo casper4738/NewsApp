@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">News App</string>
+    <string name="app_name" translatable="false">BCA News</string>
 
     <!-- Tools text -->
     <string name="title" translatable="false">Banks Won’t Rush to Hold Crypto – But OCC’s Regulatory Approval Makes It Harder to Ignore</string>
@@ -9,6 +9,10 @@
     <string name="author" translatable="false">Tom Warren</string>
     <string name="date" translatable="false">2020–07–24</string>
     <string name="slash" translatable="false">/</string>
+
+    <string name="nav_home" translatable="false">Home</string>
+    <string name="nav_headline" translatable="false">Headline</string>
+    <string name="nav_profile" translatable="false">Profile</string>
 
     <!-- Preference Key -->
     <string name="preference_file_key" translatable="false">Shared Prefs Key</string>
@@ -30,6 +34,11 @@
     <string name="german">German</string>
     <string name="hungarian">Hungarian</string>
     <string name="spanish">Spanish</string>
+
+
+    <!-- Sharing article info-->
+    <string name="action_search_title">search</string>
+    <string name="action_search_description">search</string>
 
 
     <!-- Sharing article info-->

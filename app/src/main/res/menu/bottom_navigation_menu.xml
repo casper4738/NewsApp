@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/articleListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_navmenu_home"
+        android:title="@string/nav_home"/>
+    <item
+        android:id="@+id/page2"
+        android:enabled="true"
+        android:icon="@drawable/ic_navmenu_headline"
+        android:title="@string/nav_headline"/>
+    <item
+        android:id="@+id/loginFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_navmenu_contact"
+        android:title="@string/nav_profile"/>
+
+</menu>

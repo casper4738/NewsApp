@@ -24,18 +24,24 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/customDialogTitlePanelColor"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            app:contentInsetStart="0dp"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/top_app_bar"
             app:popupTheme="@style/NewsappPopupOverlay">
 
-            <TextView
-                android:id="@+id/toolbar_title"
+            <!--  <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/app_name"
+                    android:textSize="18dp" />-->
+            <ImageView
+                android:id="@+id/top_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
-                android:text="@string/app_name"
-                android:textSize="18dp" />
+                android:layout_height="wrap_content"
+                android:gravity="center|center_vertical"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_news" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -63,8 +69,8 @@
         android:id="@+id/article_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
         android:layout_marginTop="10dp"
+        android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"

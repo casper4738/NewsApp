@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_navmenu_home"
         android:title="@string/nav_home"/>
     <item
-        android:id="@+id/page2"
+        android:id="@+id/userProfileFragment"
         android:enabled="true"
         android:icon="@drawable/ic_navmenu_headline"
         android:title="@string/nav_headline"/>

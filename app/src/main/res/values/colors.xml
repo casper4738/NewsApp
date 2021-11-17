@@ -17,4 +17,11 @@
   <color name="newsappSecondaryTextColor">#ffffff</color>
   <color name="newsappBlackTextColor">#000000</color>
 
+  <color name="white">#ffffff</color>
+  <color name="grey">#E9EAEE</color>
+  <color name="yellow">#F8BA0F</color>
+  <color name="goodgrey">#535353</color>
+  <color name="blue">#293859</color>
+  <color name="lightgrey">#EEEEEE</color>
+
 </resources>

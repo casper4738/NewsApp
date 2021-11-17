@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "article_table")
-class Article (
+data class Article (
     @PrimaryKey
     val id: String,
     val url: String,

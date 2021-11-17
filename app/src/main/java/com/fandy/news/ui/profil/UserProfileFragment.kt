@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import com.fandy.news.R
-import com.fandy.news.databinding.LoginFragmentBinding
 import com.fandy.news.databinding.UserProfileFragmentBinding
-import com.fandy.news.model.LoginUser
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +17,6 @@ class UserProfileFragment : Fragment() {
     private val viewModel: UserProfileViewModel by hiltNavGraphViewModels(R.id.navgraph)
     private var _binding: UserProfileFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var loginUser: LoginUser
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,13 +24,15 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = UserProfileFragmentBinding.inflate(inflater, container, false)
-
+        setActionListener()
         return binding.root
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setActionListener() {
+        binding.btnLogin.setOnClickListener { view ->
+            println("FAN TEST")
+            view.findNavController().navigate(R.id.loginFragment)
+        }
     }
+
 }

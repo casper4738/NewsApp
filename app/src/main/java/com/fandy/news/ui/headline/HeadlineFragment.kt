@@ -1,12 +1,9 @@
-package com.fandy.news.ui.list
+package com.fandy.news.ui.headline
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -15,7 +12,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.fandy.news.R
-import com.fandy.news.databinding.ArticleListFragmentBinding
+import com.fandy.news.databinding.HeadlineFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -23,64 +20,28 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @ExperimentalPagingApi
-class ArticleListFragment : Fragment() {
-    private val viewModel: ArticleListViewModel by hiltNavGraphViewModels(R.id.navgraph)
+class HeadlineFragment : Fragment() {
+    private val viewModel: HeadlineViewModel by hiltNavGraphViewModels(R.id.navgraph)
+    private var _binding: HeadlineFragmentBinding? = null
+    private val binding get() = _binding!!
     private var job: Job? = null
-    private lateinit var adapter: ArticleAdapter
-    private var _binding: ArticleListFragmentBinding? = null
-    private val dropdownOptions = arrayOf("Top Headlines", "All News")
+    private lateinit var adapter: HeadlineArticleAdapter
 
-    private val binding
-        get() = _binding!!
-
-    override
-    fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ArticleListFragmentBinding.inflate(inflater, container, false)
+        _binding = HeadlineFragmentBinding.inflate(inflater, container, false)
 
         initAdapter()
-        setupDropdown()
+        getTopHeadlines()
 
         return binding.root
     }
 
-    private fun setupDropdown() {
-
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            requireContext(),
-            android.R.layout.simple_spinner_item, dropdownOptions
-        )
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner.setAdapter(adapter)
-        binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (position) {
-                    0 -> {
-                        getTopHeadlines()
-                    }
-                    1 -> {
-                        getAllNews()
-                    }
-                }
-            } // to close the onItemSelected
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
-
-    }
 
     private fun initAdapter() {
-        adapter = ArticleAdapter()
+        adapter = HeadlineArticleAdapter()
         binding.articleList.adapter = adapter
 
         adapter.addLoadStateListener { loadState ->
@@ -90,22 +51,11 @@ class ArticleListFragment : Fragment() {
         }
     }
 
-    private fun getAllNews() {
-        job?.cancel()
-
-        job = lifecycleScope.launch {
-            viewModel.loadAllArticles("tesla", "", "").collectLatest { adapter.submitData(it) }
-        }
-
-    }
-
     private fun getTopHeadlines() {
         job?.cancel()
-
         job = lifecycleScope.launch {
             viewModel.loadTopArticles("business", "").collectLatest { adapter.submitData(it) }
         }
-
     }
 
     private fun manageErrors(loadState: CombinedLoadStates) {
@@ -124,9 +74,4 @@ class ArticleListFragment : Fragment() {
         }
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

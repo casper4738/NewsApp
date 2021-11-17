@@ -69,13 +69,16 @@
 
     <string name="nav_up" translatable="false">Navigate up</string>
 
-    <string name="job_success">Job Success</string>
-    <string name="ratings">Star Ratings</string>
+    <string name="profile_last_login">Login terakhir</string>
+    <string name="profile_since_member">Bergabung sejak</string>
+    <string name="profile_saya">Profil Saya</string>
     <string name="about_me">About Me</string>
-    <string name="contact">Contact</string>
     <string name="skills">Skills</string>
     <string name="my_desc">Doing at the sweet spot between aesthetics and elegance to give life to your brand.
         My opinion belong to nobody but myself.
     </string>
+    <string name="setting_kritik_saran"><![CDATA[Kritik & Saran]]></string>
+
+    <string name="login_wrong_input">Email atau Password yang Anda masukkan salah</string>
 
 </resources>

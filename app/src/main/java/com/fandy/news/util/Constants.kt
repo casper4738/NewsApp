@@ -1,8 +1,14 @@
 package com.fandy.news.util
 
-const val API_KEY = "55b7552fc4f0480fba6fb60c56ede55f" //Obtain your api key
+const val API_KEY = "66cc9f0a8f624bb1ae1d494646073da7"
 
-const val BASE_URL = "https://newsapi.org/v2/"
+const val NEWS_API_URL = "https://newsapi.org/v2/"
+
+const val ONE_API_URL = "https://talentpool.oneindonesia.id/api/"
+
+const val ONE_API_KEY = "454041184B0240FBA3AACD15A1F7A8BB"
+
+const val CONTENT_TYPE_JSON = "application/json"
 
 const val PREF_MODE_KEY = "mode_key"
 

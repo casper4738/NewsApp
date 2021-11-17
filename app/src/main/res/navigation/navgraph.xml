@@ -4,52 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navgraph"
     android:label="login_fragment"
-    app:startDestination="@id/articleListFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.fandy.news.ui.login.LoginFragment"
+        android:name="com.fandy.news.ui.profil.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_articleListFragment"
-            app:destination="@id/articleListFragment" />
+            app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_loginFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/articleListFragment"
-        android:name="com.fandy.news.ui.list.ArticleListFragment"
-        android:label="main_fragment"
-        tools:layout="@layout/article_list_fragment">
+        android:id="@+id/homeFragment"
+        android:name="com.fandy.news.ui.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_articleListFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
-        <action
-            android:id="@+id/action_articleListFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.fandy.news.ui.article.ArticleFragment"
-        android:label="detail_fragment"
+        android:label="article_fragment"
         tools:layout="@layout/article_fragment">
         <argument
             android:name="selectedArticle"
             app:argType="com.fandy.news.model.Article" />
         <action
             android:id="@+id/action_articleFragment_to_articleListFragment"
-            app:destination="@id/articleListFragment" />
-        <action
-            android:id="@+id/action_articleFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.fandy.news.ui.profil.UserProfileFragment"
         android:label="user_profile_fragment"
-        tools:layout="@layout/user_profile_fragment" />
+        tools:layout="@layout/user_profile_fragment">
+        <action
+            android:id="@+id/action_userProfileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/headlineFragment"
+        android:name="com.fandy.news.ui.headline.HeadlineFragment"
+        android:label="headline_fragment"
+        tools:layout="@layout/headline_fragment">
+        <action
+            android:id="@+id/action_headlineFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
 </navigation>

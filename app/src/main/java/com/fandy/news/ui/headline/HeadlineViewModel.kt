@@ -1,6 +1,9 @@
-package com.fandy.news.ui.list
+package com.fandy.news.ui.headline
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -11,14 +14,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-/**
- * ViewModel for the [ArticleListFragment] screen.
- * The ViewModel works with the [NewsRepository]
- * to get the list of articles.
- */
 @ExperimentalPagingApi
 @HiltViewModel
-class ArticleListViewModel @Inject constructor(
+class HeadlineViewModel @Inject constructor(
     private val repository: NewsRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -27,10 +25,7 @@ class ArticleListViewModel @Inject constructor(
     private val _categoryLocalizedLiveData: MutableLiveData<Int> =
         MutableLiveData(getLastSavedLocalizedCategory())
 
-
-
     fun loadTopArticles(category: String, language: String = ""): Flow<PagingData<Article>> {
-
         val lastResult = currentNews
         if (lastResult != null && !shouldRefresh(language, category))
             return lastResult
@@ -42,23 +37,6 @@ class ArticleListViewModel @Inject constructor(
         //Save new filters after checks are made to establish, if the news should be refreshed.
         saveCategoryFiltering(category)
         saveLanguageFiltering(language)
-        saveCategoryLocalized()
-
-        return newNews
-    }
-
-    fun loadAllArticles(keyword: String, from: String = "", to: String = ""): Flow<PagingData<Article>> {
-
-        val lastResult = currentNews
-        if (lastResult != null && !shouldRefresh(keyword, ""))
-            return lastResult
-
-        val newNews =
-            repository.fetchAllArticles(keyword, from, to).cachedIn(viewModelScope)
-        currentNews = newNews
-
-        //Save new filters after checks are made to establish, if the news should be refreshed.
-        saveLanguageFiltering(keyword)
         saveCategoryLocalized()
 
         return newNews

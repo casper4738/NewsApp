@@ -1,7 +1,9 @@
 package com.fandy.news.di
 
+import com.fandy.news.api.LoginService
 import com.fandy.news.api.NewsService
 import com.fandy.news.db.NewsDatabase
+import com.fandy.news.repository.LoginRepository
 import com.fandy.news.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
@@ -15,10 +17,17 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewssterRepository(
+    fun provideNewsRepository(
         service: NewsService,
         database: NewsDatabase
     ): NewsRepository {
         return NewsRepository(service, database)
     }
+
+    @Provides
+    @Singleton
+    fun provideOneRepository(service: LoginService): LoginRepository {
+        return LoginRepository(service)
+    }
+
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/articleListFragment"
+        android:id="@+id/homeFragment"
         android:enabled="true"
         android:icon="@drawable/ic_navmenu_home"
         android:title="@string/nav_home"/>
     <item
-        android:id="@+id/userProfileFragment"
+        android:id="@+id/headlineFragment"
         android:enabled="true"
         android:icon="@drawable/ic_navmenu_headline"
         android:title="@string/nav_headline"/>
     <item
-        android:id="@+id/loginFragment"
+        android:id="@+id/userProfileFragment"
         android:enabled="true"
         android:icon="@drawable/ic_navmenu_contact"
         android:title="@string/nav_profile"/>

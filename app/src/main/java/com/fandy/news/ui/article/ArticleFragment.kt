@@ -65,7 +65,7 @@ class ArticleFragment : Fragment() {
             article.title.loadOrGone(selectedArticle.title.formatTitle())
             article.content.loadOrGone(selectedArticle.content.formatContent())
             article.description.loadOrGone(selectedArticle.description)
-            article.date.loadOrGone(selectedArticle.date.formatDate())
+            article.date.loadOrGone(selectedArticle.date.formatDateRemoveTime())
             article.source.loadOrGone(selectedArticle.source.name)
             Glide.with(requireContext()).load(selectedArticle.imgUrl).into(articleImage)
         }

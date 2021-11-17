@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="#293859" />
+        android:background="@color/blue" />
 
     <!--Top Header Layout-->
     <LinearLayout
@@ -21,12 +21,6 @@
         android:layout_alignParentTop="true"
         android:gravity="center_vertical"
         android:padding="16dp">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="10dp"
-            android:src="@drawable/ic_arrow_back_24dp" />
 
         <Space
             android:layout_width="wrap_content"
@@ -62,7 +56,10 @@
                 android:layout_height="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:padding="4dp"
                 android:src="@drawable/circleyellowfil" />
         </RelativeLayout>
@@ -82,8 +79,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
-            android:paddingBottom="30dp"
-            >
+            android:paddingBottom="30dp">
 
             <!--Top Profile Section -->
             <LinearLayout
@@ -101,10 +97,11 @@
                     app:cardElevation="0dp">
 
                     <ImageView
-                        android:layout_width="150dp"
-                        android:layout_height="90dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/pp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_default_profile" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -130,9 +127,24 @@
                         android:text="Android Developer"
                         android:textSize="14sp" />
 
-
                 </LinearLayout>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnLogin"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="#073042"
+                    app:cardCornerRadius="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="Login"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white" />
+                </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -161,9 +173,10 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/profile_last_login"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="97%"
+                                android:text="2021-11-17"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
 
@@ -171,7 +184,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="@string/job_success"
+                                android:text="@string/profile_last_login"
                                 android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -197,9 +210,10 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tvProfileSinceMember"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4.8/5"
+                                android:text="2021-09-06"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
 
@@ -207,77 +221,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="@string/ratings"
+                                android:text="@string/profile_since_member"
                                 android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
-            </LinearLayout>
-
-            <!--Option Bar-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/circularbordersolid"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/personalinfobtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="User Info"
-                    android:textAllCaps="true"
-                    android:textColor="@color/blue"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/lightgrey" />
-
-                <TextView
-                    android:id="@+id/experiencebtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="Experience"
-                    android:textAllCaps="true"
-                    android:textColor="@color/lightgrey"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/lightgrey" />
-
-                <TextView
-                    android:id="@+id/reviewbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="Review"
-                    android:textAllCaps="true"
-                    android:textColor="@color/lightgrey"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
             </LinearLayout>
 
             <!--Bootom Cards with sections-->
@@ -286,55 +235,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <!--About Me Card-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/circularbordersolid"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/proximanovaregular"
-                                android:text="@string/about_me"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:fontFamily="@font/proximanovaregular"
-                                android:text="Edit"
-                                android:textColor="#FFCF66"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/my_desc" />
-                    </LinearLayout>
-
-                </LinearLayout>
 
                 <!--Contact Details-->
                 <LinearLayout
@@ -353,22 +253,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/proximanovaregular"
-                            android:text="@string/contact"
+                            android:text="@string/profile_saya"
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:text="Edit"
-                            android:textColor="#FFCF66"
-                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -460,32 +348,9 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <!-- SETTING -->
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/skills"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Edit"
-                            android:textColor="#FFCF66"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                        android:id="@+id/settings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -502,35 +367,13 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/circular_grey_bordersolid"
                                 android:padding="10dp"
-                                android:src="@drawable/paintbrush" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="Expert in Photoshop, Adobe XD"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circular_grey_bordersolid"
-                                android:padding="10dp"
                                 android:src="@drawable/ic_email_24dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:text="sanskar@theindianappguy.com"
+                                android:text="@string/setting_kritik_saran"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
@@ -546,17 +389,40 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/circular_grey_bordersolid"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_location_24dp" />
+                                android:src="@drawable/star" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:text="Leeds, United Kingdom"
+                                android:text="Beri penilaian"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:paddingRight="8dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/circular_grey_bordersolid"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_info" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="Tentang BCA News"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
                     </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

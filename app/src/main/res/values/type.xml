@@ -35,7 +35,29 @@
         <item name="android:textColor">@color/newsappSecondaryColor</item>
     </style>
 
+    <style name="Newsapp.Overline.Main" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="fontFamily">@font/work_sans_thin</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Newsapp.Overline.Other" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="fontFamily">@font/work_sans_thin</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/goodgrey</item>
+    </style>
+
     <!--Title in Article Item -->
+    <style name="Newsapp.Title.Main" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Newsapp.Title.Other" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/work_sans_semibold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Newsapp.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/work_sans_semibold</item>
     </style>

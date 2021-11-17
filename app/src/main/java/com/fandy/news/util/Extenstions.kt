@@ -6,12 +6,17 @@ import androidx.core.view.isGone
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fandy.news.R
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 /**
  *  Helper function that removes time from a given date-time String.
  */
-fun String.formatDate(): String {
+fun String.formatDateRemoveTime(): String {
     var toBeReturned = this
     val key = "T"
 
@@ -20,6 +25,30 @@ fun String.formatDate(): String {
         toBeReturned = substring(0, index)
     }
     return toBeReturned
+}
+
+fun String.formatDate(): String {
+    var toBeReturned = this
+
+    if (this.isNotEmpty()) {
+        val date = getDate(this);
+        if(date == null) {
+            return toBeReturned
+        }
+        toBeReturned = SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH)
+            .format(date)
+    }
+    return toBeReturned
+}
+
+private fun getDate(dateStr: String): Date? {
+    return try {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
+        val mDate = formatter.parse(dateStr) // this never ends while debugging
+        mDate
+    } catch (e: Exception) {
+        null
+    }
 }
 
 /**

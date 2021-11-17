@@ -1,7 +1,9 @@
 package com.fandy.news.di
 
 import com.fandy.news.api.NewsService
-import com.fandy.news.util.BASE_URL
+import com.fandy.news.api.LoginService
+import com.fandy.news.util.NEWS_API_URL
+import com.fandy.news.util.ONE_API_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -14,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -37,7 +40,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi{
+    fun provideMoshi(): Moshi {
         return Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
@@ -45,11 +48,11 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient, moshi: Moshi) : Retrofit{
+    @Named("NewsApi")
+    fun provideRetrofitNewsApi(client: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(NEWS_API_URL)
             .client(client)
-//            .addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
@@ -57,7 +60,28 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideNewssterService(retrofit: Retrofit): NewsService{
+    @Named("OneApi")
+    fun provideRetrofitOneApi(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(ONE_API_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsApi(@Named("NewsApi") retrofit: Retrofit): NewsService {
         return retrofit.create(NewsService::class.java)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideOneApi(@Named("OneApi") retrofit: Retrofit): LoginService {
+        return retrofit.create(LoginService::class.java)
+    }
+
+
 }

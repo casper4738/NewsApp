@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.fandy.news.R
@@ -17,6 +21,7 @@ import com.fandy.news.databinding.ArticleFragmentBinding
 import com.fandy.news.model.Article
 import com.fandy.news.util.*
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ArticleFragment : Fragment() {
@@ -52,6 +57,15 @@ class ArticleFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+        setHasOptionsMenu(true)
+
+        binding.toolbar?.setNavigationOnClickListener {
+            view.findNavController().navigate(R.id.homeFragment)
+        }
+    }
 
     private fun setupOpenWebsiteButton() {
         binding.article.continueReadingButton.setOnClickListener {

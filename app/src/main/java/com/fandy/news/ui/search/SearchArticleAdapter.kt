@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.fandy.news.databinding.ArticleItemOtherBinding
+import com.fandy.news.databinding.ArticleItemSearchBinding
 import com.fandy.news.model.Article
 import com.fandy.news.util.formatDate
 import com.fandy.news.util.formatTitle
@@ -19,13 +19,13 @@ class SearchArticleAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ArticleItemOtherBinding.inflate(layoutInflater, parent, false)
-        return SearchArticleItemOtherViewHolder(binding)
+        val binding = ArticleItemSearchBinding.inflate(layoutInflater, parent, false)
+        return SearchArticleItemSearchViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val article = getItem(position) ?: return
-        (viewHolder as SearchArticleItemOtherViewHolder).bind(article)
+        (viewHolder as SearchArticleItemSearchViewHolder).bind(article)
     }
 
     companion object {
@@ -42,7 +42,7 @@ class SearchArticleAdapter :
 }
 
 
-class SearchArticleItemOtherViewHolder(private val binding: ArticleItemOtherBinding) :
+class SearchArticleItemSearchViewHolder(private val binding: ArticleItemSearchBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(articleItem: Article) {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:id="@+id/detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/article_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="250dp"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/preview" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Newsapp.Title.Main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                tools:text="@string/title" />
+
+
+
+            <TextView
+                android:id="@+id/source"
+                style="@style/Newsapp.Overline.Main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                tools:text="@string/source" />
+
+            <TextView
+                android:id="@+id/publishedAt"
+                style="@style/Newsapp.Overline.Main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="#E40202"
+                android:textStyle="normal"
+                tools:text="@string/date" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

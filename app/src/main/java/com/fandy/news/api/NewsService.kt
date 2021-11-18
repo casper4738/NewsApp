@@ -22,6 +22,7 @@ interface NewsService {
     @GET("everything")
     suspend fun getAllArticles(
         @Query("q") keyword: String = "",
+        @Query("language") language: String = "en",
         @Query("apiKey") apiKey: String = NEWS_API_KEY,
         @Query("from") from: String =  "",
         @Query("to") to: String =  "",

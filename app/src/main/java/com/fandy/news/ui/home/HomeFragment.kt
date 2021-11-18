@@ -15,7 +15,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.fandy.news.R
 import com.fandy.news.databinding.HomeFragmentBinding
-import com.fandy.news.ui.search.SearchFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -42,7 +41,6 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.homeToolbar)
         setHasOptionsMenu(true)
 
@@ -58,8 +56,6 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("onQueryTextSubmit", "query: " + query)
-
                 if (query != null && query.isNotBlank()) {
                     val directions =
                         HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
@@ -69,7 +65,6 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                Log.d("onQueryTextChange", "query: " + query)
                 return true
             }
         })
@@ -91,7 +86,9 @@ class HomeFragment : Fragment() {
         job?.cancel()
         job = lifecycleScope.launch {
             viewModel.loadAllArticles("business", "", "")
-                .collectLatest { adapterHome.submitData(it) }
+                .collectLatest {
+                    adapterHome.submitData(it)
+                }
         }
 
     }
@@ -110,6 +107,11 @@ class HomeFragment : Fragment() {
             val errorText = resources.getString(R.string.error) + it.error.toString()
             binding.errorText.text = errorText
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

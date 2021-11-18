@@ -1,7 +1,6 @@
 package com.fandy.news.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -9,14 +8,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.fandy.news.R
-import com.fandy.news.databinding.HomeFragmentBinding
-import com.fandy.news.ui.home.HomeFragmentDirections
+import com.fandy.news.databinding.SearchFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +23,7 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by hiltNavGraphViewModels(R.id.navgraph)
-    private var _binding: HomeFragmentBinding? = null
+    private var _binding: SearchFragmentBinding? = null
     private val binding get() = _binding!!
     private var job: Job? = null
     private lateinit var adapter: SearchArticleAdapter
@@ -37,7 +34,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        _binding = SearchFragmentBinding.inflate(inflater, container, false)
 
         initAdapter()
 
@@ -61,8 +58,6 @@ class SearchFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("onQueryTextSubmit", "query: " + query)
-
                 if (query != null && query.isNotBlank()) {
                     getAllNews(query)
                 }
@@ -70,7 +65,6 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                Log.d("onQueryTextChange", "query: " + query)
                 return true
             }
         })
@@ -111,6 +105,11 @@ class SearchFragment : Fragment() {
             val errorText = resources.getString(R.string.error) + it.error.toString()
             binding.errorText.text = errorText
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

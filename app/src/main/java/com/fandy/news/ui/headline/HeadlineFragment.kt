@@ -58,8 +58,6 @@ class HeadlineFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("onQueryTextSubmit", "query: " + query)
-
                 if (query != null && query.isNotBlank()) {
                     val directions =
                         HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
@@ -69,7 +67,6 @@ class HeadlineFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                Log.d("onQueryTextChange", "query: " + query)
                 return true
             }
         })
@@ -108,5 +105,11 @@ class HeadlineFragment : Fragment() {
             binding.errorText.text = errorText
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
 }

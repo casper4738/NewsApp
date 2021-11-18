@@ -8,11 +8,9 @@ const val ONE_API_URL = "https://talentpool.oneindonesia.id/api/"
 
 const val ONE_API_KEY = "454041184B0240FBA3AACD15A1F7A8BB"
 
-const val CONTENT_TYPE_JSON = "application/json"
+const val PREF_MODE_KEY = "bcanews_key_pref"
 
-const val PREF_MODE_KEY = "mode_key"
-
-const val PREF_LANGUAGE_KEY = "language_key"
+const val CONTENT_TYPE_FORM = "application/x-www-form-urlencoded"
 
 const val DEFAULT_LANGUAGE = "gb"
 

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.fandy.news.ui.profil.LoginFragment"
+        android:name="com.fandy.news.ui.login.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment">
         <action

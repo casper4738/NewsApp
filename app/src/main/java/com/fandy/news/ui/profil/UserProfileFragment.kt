@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
@@ -30,8 +31,11 @@ class UserProfileFragment : Fragment() {
 
     private fun setActionListener() {
         binding.btnLogin.setOnClickListener { view ->
-            println("FAN TEST")
-            view.findNavController().navigate(R.id.loginFragment)
+            if(viewModel.isLogin()) {
+                Toast.makeText(activity, "Already Login", Toast.LENGTH_SHORT).show()
+            } else {
+                view.findNavController().navigate(R.id.loginFragment)
+            }
         }
     }
 

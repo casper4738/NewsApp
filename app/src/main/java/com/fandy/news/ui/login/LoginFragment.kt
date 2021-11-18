@@ -1,4 +1,4 @@
-package com.fandy.news.ui.profil
+package com.fandy.news.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,19 +29,32 @@ class LoginFragment : Fragment() {
 
         setupLoginButton()
 
+        setObserve()
+
         return binding.root
+    }
+
+    private fun setObserve() {
+        loginViewModel.loginUser.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
+                view?.findNavController()?.navigate(R.id.userProfileFragment)
+
+            }
+        }
+
+        loginViewModel.errorState.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                if(!response.status) {
+                    Toast.makeText(activity, response.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupLoginButton() {
         binding.btnLogin.setOnClickListener { view ->
             doLogin()
-            loginViewModel.loginUser.observe(viewLifecycleOwner) { response ->
-                response?.let {
-                    Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
-                    navigateTo(view)
-                }
-            }
-
         }
     }
 
@@ -59,11 +72,6 @@ class LoginFragment : Fragment() {
             )
             loginViewModel.login(loginRequest)
         }
-    }
-
-    private fun navigateTo(view: View) {
-        val directions = LoginFragmentDirections.actionLoginFragmentToArticleListFragment()
-        view.findNavController().navigate(directions)
     }
 
 }

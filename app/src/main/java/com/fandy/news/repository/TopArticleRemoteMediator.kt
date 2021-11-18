@@ -110,7 +110,7 @@ class TopArticleRemoteMediator @Inject constructor(
         state: PagingState<Int, Article>
     ): NewsResponse {
         return service.getTopArticles(
-            country = language,
+            language = language,
             category = category,
             page = loadKey,
             pageSize = state.config.pageSize

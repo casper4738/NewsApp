@@ -34,8 +34,6 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun setActionListener() {
-        Toast.makeText(activity, "Status ${viewModel.isLogin()}", Toast.LENGTH_SHORT).show()
-
         if (viewModel.isLogin()) {
             Toast.makeText(activity, resources.getString(R.string.login_issuccess), Toast.LENGTH_SHORT).show()
             enableViewLogin()
@@ -52,6 +50,8 @@ class UserProfileFragment : Fragment() {
             binding.tvUsername.text = loginUser.username
             binding.tvLastActivity.text = "Aktivitas Terakhir : ${loginUser.lastActivity}"
         } else {
+            Toast.makeText(activity, resources.getString(R.string.login_notsuccess), Toast.LENGTH_SHORT).show()
+
             binding.tvLastActivity.text = "Aktivitas Terakhir : -"
 
             enableViewNotLogin()

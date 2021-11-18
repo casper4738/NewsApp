@@ -81,6 +81,7 @@
 
     <string name="dialog_ok">OK</string>
     <string name="login_issuccess">Kamu sudah Login</string>
+    <string name="login_notsuccess">Kamu belum Login</string>
     <string name="login_wrong_input">Email atau Password yang Anda masukkan salah</string>
     <string name="session_timeout_title">BCANews - Session Terputus</string>
     <string name="session_timeout">Silahkan Login kembali untuk menikmati Fitur Premium.\n

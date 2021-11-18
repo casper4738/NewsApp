@@ -96,9 +96,5 @@ class UserProfileFragment : Fragment() {
         binding.layoutProfilSaya.visibility = View.GONE
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
 }

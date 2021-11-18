@@ -38,6 +38,7 @@ class ArticleFragment : Fragment() {
     ): View {
         _binding = ArticleFragmentBinding.inflate(inflater, container, false)
 
+        setupActionBar()
         setupOpenWebsiteButton()
 
         articleViewModel.fetchArticle(article.id)
@@ -58,12 +59,25 @@ class ArticleFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+//        setHasOptionsMenu(true)
+//
+//        binding.toolbar?.setNavigationOnClickListener {
+//            view.findNavController().navigate(R.id.homeFragment)
+//        }
+    }
 
-        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-        setHasOptionsMenu(true)
+    private fun setupActionBar() {
+        binding.toolbar.apply {
+            setTitle(R.string.app_name)
+            navigationContentDescription = resources.getString(R.string.nav_up)
+            setNavigationOnClickListener { findNavController().navigateUp() }
 
-        binding.toolbar?.setNavigationOnClickListener {
-            view.findNavController().navigate(R.id.homeFragment)
+            setOnMenuItemClickListener {
+                if (it.itemId == R.id.share)
+                    articleViewModel.shareArticle(this@ArticleFragment.article.url)
+                true
+            }
         }
     }
 
@@ -102,8 +116,4 @@ class ArticleFragment : Fragment() {
             startActivity(intent)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

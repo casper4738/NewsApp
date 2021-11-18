@@ -52,6 +52,8 @@ class UserProfileFragment : Fragment() {
         } else {
             Toast.makeText(activity, resources.getString(R.string.login_notsuccess), Toast.LENGTH_SHORT).show()
 
+            binding.profileLastLogin.text = "-"
+            binding.tvProfileSinceMember.text = "-"
             binding.tvLastActivity.text = "Aktivitas Terakhir : -"
 
             enableViewNotLogin()
@@ -65,6 +67,9 @@ class UserProfileFragment : Fragment() {
         binding.btnLogin.visibility = View.GONE
         binding.layoutNotLogin.visibility = View.GONE
 
+
+        binding.tvFullname.visibility = View.VISIBLE
+        binding.tvUsername.visibility = View.VISIBLE
         binding.layoutLogin.visibility = View.VISIBLE
         binding.btnLogout.visibility = View.VISIBLE
         binding.layoutProfilSaya.visibility = View.VISIBLE
@@ -74,6 +79,8 @@ class UserProfileFragment : Fragment() {
         binding.btnLogin.visibility = View.VISIBLE
         binding.layoutNotLogin.visibility = View.VISIBLE
 
+        binding.tvFullname.visibility = View.GONE
+        binding.tvUsername.visibility = View.GONE
         binding.layoutLogin.visibility = View.GONE
         binding.btnLogout.visibility = View.GONE
         binding.layoutProfilSaya.visibility = View.GONE

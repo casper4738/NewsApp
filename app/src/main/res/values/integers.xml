@@ -2,4 +2,5 @@
 <resources>
     <integer name="onboarding_topics_rows">2</integer>
     <integer name="span_count">2</integer>
+    <integer name="session_timeout_in_milis">5000</integer>
 </resources>

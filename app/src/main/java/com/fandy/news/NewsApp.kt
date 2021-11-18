@@ -1,16 +1,21 @@
 package com.fandy.news
 
 import android.app.Application
+import com.fandy.news.repository.MyPreference
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
+import javax.inject.Inject
 import kotlin.concurrent.timerTask
 
 @HiltAndroidApp
 class NewsApp() : Application() {
+
+    @Inject
+    lateinit var myPreference: MyPreference
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
     private lateinit var logoutListener: SessionListener
@@ -26,14 +31,18 @@ class NewsApp() : Application() {
     }
 
     fun startUserSession() {
-        cancelTimer()
+        println("FANNN :: startUserSession")
+        if (myPreference.getStoredBoolean("login.isSuccess")) {
+            cancelTimer()
 
-        println("FANNN startUserSession ${Date()}")
-        timer = Timer();
-        timer!!.schedule(timerTask {
-            println("FANNN startUserSession onSessionLogout ${Date()}")
-            logoutListener.onSessionLogout()
-        }, 5000)
+            val sessionTimeoutInMilis =
+                applicationContext.resources.getInteger(R.integer.session_timeout_in_milis).toLong()
+            timer = Timer();
+            timer!!.schedule(timerTask {
+                logoutListener.onSessionLogout()
+            }, sessionTimeoutInMilis)
+        }
+
     }
 
     private fun cancelTimer() {

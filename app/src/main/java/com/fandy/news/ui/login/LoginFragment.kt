@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
+import com.fandy.news.NewsApp
 import com.fandy.news.R
 import com.fandy.news.databinding.LoginFragmentBinding
 import com.fandy.news.model.LoginRequest
+import com.fandy.news.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +41,7 @@ class LoginFragment : Fragment() {
             response?.let {
                 Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.navigate(R.id.userProfileFragment)
-
+//                (activity as MainActivity).onUserInteraction()
             }
         }
 

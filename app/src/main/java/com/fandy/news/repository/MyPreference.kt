@@ -16,7 +16,16 @@ class MyPreference @Inject constructor(
     private val prefs = context.getSharedPreferences(PREF_MODE_KEY, Context.MODE_PRIVATE)
 
     fun getStoredString(key: String): String {
-        val str = prefs.getString(key, "");
+        var str : String?
+        try {
+            str = prefs.getString(key, "");
+        } catch (e: java.lang.ClassCastException) {
+            try {
+                str = prefs.getBoolean(key, false).toString();
+            } catch (e: Exception) {
+                str = ""
+            }
+        }
         return str?.let {
             val decryptValue = securityEncryption.decrypt(decodeString(str))
             decryptValue

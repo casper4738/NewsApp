@@ -1,18 +1,21 @@
 package com.fandy.news.ui.headline
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.fandy.news.R
 import com.fandy.news.databinding.HeadlineFragmentBinding
+import com.fandy.news.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -39,7 +42,37 @@ class HeadlineFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.homeToolbar)
+        setHasOptionsMenu(true)
+
         getTopHeadlines()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.top_app_bar, menu)
+
+        val searchItem = menu.findItem(R.id.news_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("onQueryTextSubmit", "query: " + query)
+
+                if (query != null && query.isNotBlank()) {
+                    val directions =
+                        HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
+                    view?.findNavController()?.navigate(directions)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                Log.d("onQueryTextChange", "query: " + query)
+                return true
+            }
+        })
     }
 
     private fun initAdapter() {

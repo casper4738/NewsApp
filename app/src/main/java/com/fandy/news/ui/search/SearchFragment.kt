@@ -1,4 +1,4 @@
-package com.fandy.news.ui.home
+package com.fandy.news.ui.search
 
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.fandy.news.R
 import com.fandy.news.databinding.HomeFragmentBinding
-import com.fandy.news.ui.search.SearchFragmentDirections
+import com.fandy.news.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -23,12 +24,14 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @ExperimentalPagingApi
-class HomeFragment : Fragment() {
-    private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.navgraph)
+class SearchFragment : Fragment() {
+    private val viewModel: SearchViewModel by hiltNavGraphViewModels(R.id.navgraph)
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
     private var job: Job? = null
-    private lateinit var adapterHome: HomeArticleAdapter
+    private lateinit var adapter: SearchArticleAdapter
+    private val args: SearchFragmentArgs by navArgs()
+    private val keywordSearch: String by lazy { args.keywordSearch }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +45,12 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.homeToolbar)
         setHasOptionsMenu(true)
 
-        getAllNews()
+        getAllNews(keywordSearch)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -61,9 +64,7 @@ class HomeFragment : Fragment() {
                 Log.d("onQueryTextSubmit", "query: " + query)
 
                 if (query != null && query.isNotBlank()) {
-                    val directions =
-                        HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
-                    view?.findNavController()?.navigate(directions)
+                    getAllNews(query)
                 }
                 return true
             }
@@ -77,21 +78,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapterHome = HomeArticleAdapter()
-        binding.articleList.adapter = adapterHome
+        adapter = SearchArticleAdapter()
+        binding.articleList.adapter = adapter
 
-        adapterHome.addLoadStateListener { loadState ->
+        adapter.addLoadStateListener { loadState ->
             binding.articleList.isVisible = loadState.refresh is LoadState.NotLoading
             binding.progress.isVisible = loadState.refresh is LoadState.Loading
             manageErrors(loadState)
         }
     }
 
-    private fun getAllNews() {
+    private fun getAllNews(querySearch: String) {
         job?.cancel()
         job = lifecycleScope.launch {
-            viewModel.loadAllArticles("business", "", "")
-                .collectLatest { adapterHome.submitData(it) }
+            viewModel.loadAllArticles(querySearch, "", "")
+                .collectLatest { adapter.submitData(it) }
         }
 
     }
@@ -99,7 +100,7 @@ class HomeFragment : Fragment() {
     private fun manageErrors(loadState: CombinedLoadStates) {
         binding.errorText.isVisible = loadState.refresh is LoadState.Error
         binding.retryButton.isVisible = loadState.refresh is LoadState.Error
-        binding.retryButton.setOnClickListener { adapterHome.retry() }
+        binding.retryButton.setOnClickListener { adapter.retry() }
 
         val errorState = loadState.source.append as? LoadState.Error
             ?: loadState.source.prepend as? LoadState.Error

@@ -4,6 +4,7 @@ import android.content.Context
 import com.fandy.news.security.SecurityEncryption
 import com.fandy.news.util.PREF_MODE_KEY
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,11 +16,15 @@ class MyPreference @Inject constructor(
 
     private val prefs = context.getSharedPreferences(PREF_MODE_KEY, Context.MODE_PRIVATE)
 
+    fun clearAll(){
+        prefs.edit().clear().apply()
+    }
+
     fun getStoredString(key: String): String {
         var str : String?
         try {
             str = prefs.getString(key, "");
-        } catch (e: java.lang.ClassCastException) {
+        } catch (e: Exception) {
             try {
                 str = prefs.getBoolean(key, false).toString();
             } catch (e: Exception) {

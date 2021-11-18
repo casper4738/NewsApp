@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
             response?.let {
                 Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.navigate(R.id.userProfileFragment)
-//                (activity as MainActivity).onUserInteraction()
+                (activity as MainActivity).onUserInteraction()
             }
         }
 

@@ -35,9 +35,11 @@ class HomeFragment : Fragment() {
 
         initAdapter()
 
-        getAllNews()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        getAllNews()
     }
 
 

@@ -91,6 +91,8 @@
                 android:padding="16dp">
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    android:id="@+id/layoutNotLogin"
                     android:layout_width="150dp"
                     android:layout_height="90dp"
                     app:cardCornerRadius="6dp"
@@ -105,12 +107,29 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/layoutLogin"
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center"
+                        android:src="@drawable/pp" />
+
+                </androidx.cardview.widget.CardView>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvFullname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -121,10 +140,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvUsername"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:fontFamily="@font/proximanovaregular"
-                        android:text="Android Developer"
+                        android:text="username"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -142,6 +163,23 @@
                         android:gravity="center"
                         android:padding="12dp"
                         android:text="Login"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnLogout"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="#B50303"
+                    app:cardCornerRadius="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="Logout"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white" />
                 </com.google.android.material.card.MaterialCardView>
@@ -238,6 +276,7 @@
 
                 <!--Contact Details-->
                 <LinearLayout
+                    android:id="@+id/layoutProfilSaya"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -303,6 +342,7 @@
                                 android:src="@drawable/ic_email_24dp" />
 
                             <TextView
+                                android:id="@+id/tvEmail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
@@ -327,6 +367,7 @@
                                 android:src="@drawable/ic_location_24dp" />
 
                             <TextView
+                                android:id="@+id/tvLastActivity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"

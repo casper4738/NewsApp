@@ -34,11 +34,13 @@ class HeadlineFragment : Fragment() {
         _binding = HeadlineFragmentBinding.inflate(inflater, container, false)
 
         initAdapter()
-        getTopHeadlines()
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        getTopHeadlines()
+    }
 
     private fun initAdapter() {
         adapter = HeadlineArticleAdapter()

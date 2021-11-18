@@ -52,7 +52,13 @@ class LoginViewModel @Inject constructor(
 
                         myPreference.setStored("login.username", loginUser.username)
                         myPreference.setStored("login.fullName", loginUser.fullName)
-                        myPreference.setStored("login.isSuccess", true)
+                        myPreference.setStored("login.isSuccess", "true")
+                        myPreference.setStored("login.lastLogin", loginUser.lastLogin)
+                        myPreference.setStored("login.dateCreated", loginUser.dateCreated)
+                        myPreference.setStored("login.avatar", loginUser.avatar)
+                        myPreference.setStored("login.lastActivity", loginUser.lastActivity)
+                        myPreference.setStored("login.id", loginUser.id)
+                        myPreference.setStored("login.email", loginUser.email)
                     }
 
                 } else {

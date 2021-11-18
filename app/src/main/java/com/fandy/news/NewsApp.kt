@@ -57,4 +57,9 @@ class NewsApp() : Application() {
         startUserSession()
     }
 
+    fun removeSession() {
+        cancelTimer()
+        myPreference.clearAll()
+    }
+
 }

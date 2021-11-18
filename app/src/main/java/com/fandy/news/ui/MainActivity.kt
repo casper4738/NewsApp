@@ -28,14 +28,11 @@ class MainActivity : AppCompatActivity(), SessionListener{
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment? ?: return
         navController = host.navController
 
 
-        //Initialize the bottom navigation view
-        //create bottom navigation view object
         binding.bottomNavigation.setupWithNavController(navController)
 
         (application as NewsApp).registerSessionListener(this)
@@ -45,7 +42,6 @@ class MainActivity : AppCompatActivity(), SessionListener{
         super.onUserInteraction()
         (application as NewsApp).onUserInteraction()
     }
-
 
     override fun onSessionLogout() {
         runOnUiThread(Runnable {
@@ -59,6 +55,7 @@ class MainActivity : AppCompatActivity(), SessionListener{
                 }
                 .show()
 
+            (application as NewsApp).removeSession()
             navController.navigate(R.id.homeFragment)
 
         })

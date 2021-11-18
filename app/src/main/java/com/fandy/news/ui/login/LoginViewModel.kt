@@ -9,12 +9,20 @@ import com.fandy.news.model.LoginUser
 import com.fandy.news.repository.LoginRepository
 import com.fandy.news.repository.MyPreference
 import com.fandy.news.security.SecurityEncryption
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import javax.inject.Inject
+import com.google.gson.JsonParser
+
+import com.google.gson.JsonObject
+
+
+
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -62,7 +70,9 @@ class LoginViewModel @Inject constructor(
                     }
 
                 } else {
-                    onError("Error : ${response.message()} ")
+                    var responseError = response.errorBody()?.string()
+                    val jsonObject: JsonObject = JsonParser().parse(responseError).getAsJsonObject()
+                    onError(jsonObject.get("message").asString)
                 }
             }
         }

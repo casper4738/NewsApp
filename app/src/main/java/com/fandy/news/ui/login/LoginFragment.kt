@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
-import com.fandy.news.NewsApp
 import com.fandy.news.R
 import com.fandy.news.databinding.LoginFragmentBinding
 import com.fandy.news.model.LoginRequest
-import com.fandy.news.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import com.fandy.news.ui.MainActivity
+
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -39,6 +39,8 @@ class LoginFragment : Fragment() {
     private fun setObserve() {
         loginViewModel.loginUser.observe(viewLifecycleOwner) { response ->
             response?.let {
+                loginReset()
+
                 Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.navigate(R.id.userProfileFragment)
                 (activity as MainActivity).onUserInteraction()
@@ -47,15 +49,37 @@ class LoginFragment : Fragment() {
 
         loginViewModel.errorState.observe(viewLifecycleOwner) { response ->
             response?.let {
-                if(!response.status) {
-                    Toast.makeText(activity, response.message, Toast.LENGTH_SHORT).show()
+                loginReset()
+                showLoginError()
+                binding.tvErrorMessage.text = response.message
+                if (!response.status) {
+                    binding.tvErrorMessage.text = response.message
                 }
             }
         }
     }
 
+    private fun loginLoading() {
+        binding.indicatorLogin.visibility = View.VISIBLE
+        binding.textLogin.visibility = View.GONE
+    }
+
+    private fun loginReset() {
+        binding.indicatorLogin.visibility = View.GONE
+        binding.textLogin.visibility = View.VISIBLE
+        binding.tvErrorMessage.visibility = View.GONE
+    }
+
+    private fun showLoginError() {
+        binding.tvErrorMessage.visibility = View.VISIBLE
+    }
+
+
     private fun setupLoginButton() {
+        loginReset()
+
         binding.btnLogin.setOnClickListener { view ->
+            loginLoading()
             doLogin()
         }
     }
@@ -63,10 +87,14 @@ class LoginFragment : Fragment() {
     private fun doLogin() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-        if(email.isNullOrBlank()) {
-            Toast.makeText(activity, getString(R.string.login_wrong_input), Toast.LENGTH_SHORT).show()
-        } else if(email.isNullOrBlank()) {
-            Toast.makeText(activity, getString(R.string.login_wrong_input), Toast.LENGTH_SHORT).show()
+        if (email.isNullOrBlank()) {
+            binding.tvErrorMessage.text = getString(R.string.login_wrong_input)
+            loginReset()
+            showLoginError()
+        } else if (password.isNullOrBlank()) {
+            binding.tvErrorMessage.text = getString(R.string.login_wrong_input)
+            loginReset()
+            showLoginError()
         } else {
             var loginRequest = LoginRequest(
                 email = email,

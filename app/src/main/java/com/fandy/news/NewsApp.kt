@@ -31,7 +31,6 @@ class NewsApp() : Application() {
     }
 
     fun startUserSession() {
-        println("FANNN :: startUserSession")
         if (myPreference.getStoredBoolean("login.isSuccess")) {
             cancelTimer()
 

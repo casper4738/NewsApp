@@ -35,12 +35,12 @@ class UserProfileFragment : Fragment() {
 
     private fun setActionListener() {
         if (viewModel.isLogin()) {
-            Toast.makeText(activity, resources.getString(R.string.login_issuccess), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                resources.getString(R.string.login_issuccess),
+                Toast.LENGTH_SHORT
+            ).show()
             enableViewLogin()
-            binding.btnLogout.setOnClickListener { view ->
-                view.findNavController().navigate(R.id.loginFragment)
-                (activity as MainActivity).onUserInteraction()
-            }
 
             val loginUser = viewModel.getLoginUser()
             binding.profileLastLogin.text = loginUser.lastLogin.formatDate()
@@ -50,16 +50,26 @@ class UserProfileFragment : Fragment() {
             binding.tvUsername.text = loginUser.username
             binding.tvLastActivity.text = "Aktivitas Terakhir : ${loginUser.lastActivity}"
         } else {
-            Toast.makeText(activity, resources.getString(R.string.login_notsuccess), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                resources.getString(R.string.login_notsuccess),
+                Toast.LENGTH_SHORT
+            ).show()
 
             binding.profileLastLogin.text = "-"
             binding.tvProfileSinceMember.text = "-"
             binding.tvLastActivity.text = "Aktivitas Terakhir : -"
 
             enableViewNotLogin()
-            binding.btnLogin.setOnClickListener { view ->
-                view.findNavController().navigate(R.id.loginFragment)
-            }
+        }
+
+        binding.btnLogin.setOnClickListener { view ->
+            view.findNavController().navigate(R.id.loginFragment)
+        }
+
+        binding.btnLogout.setOnClickListener { view ->
+            enableViewNotLogin()
+            (activity as MainActivity).logout()
         }
     }
 

@@ -42,7 +42,6 @@ class SecurityEncryptionImpl : SecurityEncryption {
             keyGenerator.init(256)
             secretKey = keyGenerator.generateKey()
         } catch (e: Exception) {
-            e.printStackTrace()
         }
 
         random = SecureRandom()

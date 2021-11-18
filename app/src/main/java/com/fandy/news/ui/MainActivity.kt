@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity(), SessionListener{
         (application as NewsApp).onUserInteraction()
     }
 
+    fun logout() {
+        (application as NewsApp).removeSession()
+    }
+
     override fun onSessionLogout() {
         runOnUiThread(Runnable {
 

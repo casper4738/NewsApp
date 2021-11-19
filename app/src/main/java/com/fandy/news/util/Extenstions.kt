@@ -100,9 +100,8 @@ fun ImageView.loadImageOrDefault(imgUrl: String) {
             .load(imgUrl)
             .apply(RequestOptions()
                 .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_logo))
+                .error(R.drawable.ic_load))
             .into(this)
     else
         Glide.with(this).asGif().load(R.raw.loading).into(this);
-//        this.setImageResource(R.drawable.loading_animation)
 }

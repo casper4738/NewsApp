@@ -82,7 +82,7 @@ class SearchArticleRemoteMediator @Inject constructor(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     remoteKeyDao.clearRemoteKeys(typeArticle)
-                    articleDao.clearHomeArticle()
+                    articleDao.clearSearchArticle()
                 }
 
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1

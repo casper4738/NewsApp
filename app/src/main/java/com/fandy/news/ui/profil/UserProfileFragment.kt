@@ -15,6 +15,11 @@ import com.fandy.news.ui.MainActivity
 import com.fandy.news.util.formatDate
 import com.fandy.news.util.formatDateRemoveTime
 import dagger.hilt.android.AndroidEntryPoint
+import android.content.Intent
+import android.net.Uri
+import com.fandy.news.NewsApp
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 
 @AndroidEntryPoint
 class UserProfileFragment : Fragment() {
@@ -71,6 +76,44 @@ class UserProfileFragment : Fragment() {
             enableViewNotLogin()
             (activity as MainActivity).logout()
         }
+
+        binding.tvKritikSaran.setOnClickListener { view ->
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+            activity?.startActivity(intent)
+        }
+
+        binding.tvPenilaian.setOnClickListener { view ->
+            val packageName = "com.bca.halobca.android"
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$packageName")
+                    )
+                )
+            } catch (e: Exception) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                    )
+                )
+            }
+        }
+
+        binding.tvTentang.setOnClickListener { view ->
+            MaterialAlertDialogBuilder(view.context, R.style.MaterialAlertDialog__Center)
+                .setTitle(resources.getString(R.string.app_name))
+                .setMessage(resources.getString(R.string.dialog_about))
+                .setCancelable(true)
+                .setPositiveButton(resources.getString(R.string.dialog_ok)) { dialog, which ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+
+
     }
 
     private fun enableViewLogin() {

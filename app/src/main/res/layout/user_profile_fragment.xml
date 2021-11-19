@@ -374,6 +374,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/tvKritikSaran"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -395,6 +396,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/tvPenilaian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -417,6 +419,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/tvTentang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"

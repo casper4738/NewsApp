@@ -12,6 +12,7 @@ import com.fandy.news.model.ArticleTopHeadlines
 import com.fandy.news.repository.mediator.HomeArticleRemoteMediator
 import com.fandy.news.repository.mediator.SearchArticleRemoteMediator
 import com.fandy.news.repository.mediator.TopHeadlineArticleRemoteMediator
+import com.fandy.news.util.NETWORK_PAGE_SIZE
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -62,7 +63,4 @@ class NewsRepository @Inject constructor(
         ).flow
     }
 
-    companion object {
-        private const val NETWORK_PAGE_SIZE = 20
-    }
 }

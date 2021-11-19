@@ -38,6 +38,20 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
     </style>
 
+    <style name="Title.Panel.Center" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="Message.Center" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="MaterialAlertDialog__Center" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitlePanelStyle">@style/Title.Panel.Center</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Message.Center</item>
+    </style>
+
+
     <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>

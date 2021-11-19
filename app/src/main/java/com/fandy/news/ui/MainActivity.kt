@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), SessionListener{
     override fun onSessionLogout() {
         runOnUiThread(Runnable {
 
-            MaterialAlertDialogBuilder(this)
+            MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog__Center)
                 .setTitle(resources.getString(R.string.session_timeout_title))
                 .setMessage(resources.getString(R.string.session_timeout))
                 .setCancelable(true)

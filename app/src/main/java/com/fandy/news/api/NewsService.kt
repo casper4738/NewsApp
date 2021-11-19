@@ -1,6 +1,6 @@
 package com.fandy.news.api
 
-import com.fandy.news.util.*
+import com.fandy.news.util.NEWS_API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
 

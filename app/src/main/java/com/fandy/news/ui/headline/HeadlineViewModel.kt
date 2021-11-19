@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.fandy.news.model.Article
 import com.fandy.news.model.ArticleTopHeadlines
 import com.fandy.news.repository.NewsRepository
 import com.fandy.news.util.*
@@ -26,7 +25,10 @@ class HeadlineViewModel @Inject constructor(
     private val _categoryLocalizedLiveData: MutableLiveData<Int> =
         MutableLiveData(getLastSavedLocalizedCategory())
 
-    fun loadTopArticles(category: String, language: String = ""): Flow<PagingData<ArticleTopHeadlines>> {
+    fun loadTopArticles(
+        category: String,
+        language: String = ""
+    ): Flow<PagingData<ArticleTopHeadlines>> {
         val lastResult = currentNews
         if (lastResult != null && !shouldRefresh(language, category))
             return lastResult

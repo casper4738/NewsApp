@@ -4,7 +4,6 @@ import android.content.Context
 import com.fandy.news.security.SecurityEncryption
 import com.fandy.news.util.PREF_MODE_KEY
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 import javax.inject.Singleton
 

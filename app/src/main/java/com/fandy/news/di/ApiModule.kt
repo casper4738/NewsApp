@@ -1,7 +1,7 @@
 package com.fandy.news.di
 
-import com.fandy.news.api.NewsService
 import com.fandy.news.api.LoginService
+import com.fandy.news.api.NewsService
 import com.fandy.news.util.NEWS_API_URL
 import com.fandy.news.util.ONE_API_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

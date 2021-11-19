@@ -1,6 +1,9 @@
 package com.fandy.news.api
 
-import com.fandy.news.model.*
+import com.fandy.news.model.ArticleHome
+import com.fandy.news.model.ArticleSearch
+import com.fandy.news.model.ArticleTopHeadlines
+import com.fandy.news.model.Source
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

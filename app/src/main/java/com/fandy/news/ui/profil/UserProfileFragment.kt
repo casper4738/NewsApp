@@ -1,6 +1,7 @@
 package com.fandy.news.ui.profil
 
-import android.opengl.Visibility
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,8 @@ import com.fandy.news.R
 import com.fandy.news.databinding.UserProfileFragmentBinding
 import com.fandy.news.ui.MainActivity
 import com.fandy.news.util.formatDate
-import com.fandy.news.util.formatDateRemoveTime
-import dagger.hilt.android.AndroidEntryPoint
-import android.content.Intent
-import android.net.Uri
-import com.fandy.news.NewsApp
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint

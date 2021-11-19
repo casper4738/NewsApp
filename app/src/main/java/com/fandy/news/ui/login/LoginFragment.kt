@@ -11,9 +11,9 @@ import androidx.navigation.findNavController
 import com.fandy.news.R
 import com.fandy.news.databinding.LoginFragmentBinding
 import com.fandy.news.model.LoginRequest
-import dagger.hilt.android.AndroidEntryPoint
 import com.fandy.news.ui.MainActivity
 import com.fandy.news.util.EventObserver
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint

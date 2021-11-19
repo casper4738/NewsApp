@@ -5,8 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.fandy.news.api.NewsService
 import com.fandy.news.api.NewsResponse
+import com.fandy.news.api.NewsService
 import com.fandy.news.api.asHomeArticleModel
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.db.RemoteKey

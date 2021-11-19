@@ -1,7 +1,6 @@
 package com.fandy.news.ui.headline
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -15,7 +14,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.fandy.news.R
 import com.fandy.news.databinding.HeadlineFragmentBinding
-import com.fandy.news.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

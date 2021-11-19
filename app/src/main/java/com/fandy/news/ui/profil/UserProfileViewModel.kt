@@ -1,6 +1,6 @@
 package com.fandy.news.ui.profil
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
 import com.fandy.news.model.LoginUser
 import com.fandy.news.repository.MyPreference
 import dagger.hilt.android.lifecycle.HiltViewModel

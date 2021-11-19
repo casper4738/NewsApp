@@ -16,7 +16,6 @@
 
 package com.fandy.news.security
 
-import java.lang.Exception
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator

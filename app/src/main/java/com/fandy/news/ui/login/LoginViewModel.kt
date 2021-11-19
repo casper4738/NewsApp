@@ -8,21 +8,15 @@ import com.fandy.news.model.LoginRequest
 import com.fandy.news.model.LoginUser
 import com.fandy.news.repository.LoginRepository
 import com.fandy.news.repository.MyPreference
-import com.fandy.news.security.SecurityEncryption
 import com.fandy.news.util.SingleEvent
-import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import javax.inject.Inject
-import com.google.gson.JsonParser
-
-import com.google.gson.JsonObject
-
-
 
 
 @HiltViewModel

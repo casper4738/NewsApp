@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.fandy.news.model.Article
 import com.fandy.news.model.ArticleSearch
 import com.fandy.news.repository.NewsRepository
 import com.fandy.news.util.*

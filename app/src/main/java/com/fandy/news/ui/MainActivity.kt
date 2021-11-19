@@ -2,20 +2,15 @@ package com.fandy.news.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.PreferenceManager
 import com.fandy.news.NewsApp
 import com.fandy.news.R
 import com.fandy.news.SessionListener
 import com.fandy.news.databinding.ActivityMainBinding
-import com.fandy.news.repository.MyPreference
-import com.fandy.news.util.PREF_MODE_KEY
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

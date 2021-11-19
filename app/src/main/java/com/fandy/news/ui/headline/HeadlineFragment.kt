@@ -60,7 +60,7 @@ class HeadlineFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null && query.isNotBlank()) {
                     val directions =
-                        HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
+                        HeadlineFragmentDirections.actionHeadlineFragmentToSearchFragment(query)
                     view?.findNavController()?.navigate(directions)
                 }
                 return true

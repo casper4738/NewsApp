@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -41,11 +38,13 @@ class ArticleFragment : Fragment() {
         setupActionBar()
         setupOpenWebsiteButton()
 
-        articleViewModel.fetchArticle(article.id)
+//        articleViewModel.fetchArticle(article.id)
 
-        articleViewModel.articleLiveData.observe(viewLifecycleOwner) { article ->
-            displayArticle(article)
-        }
+//        articleViewModel.articleLiveData.observe(viewLifecycleOwner) { article ->
+//            displayArticle(article)
+//        }
+
+        displayArticle(article)
 
         articleViewModel.shareArticleEvent.observe(viewLifecycleOwner, EventObserver { articleUrl ->
             shareArticle(articleUrl)
@@ -56,15 +55,6 @@ class ArticleFragment : Fragment() {
         })
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-//        setHasOptionsMenu(true)
-//
-//        binding.toolbar?.setNavigationOnClickListener {
-//            view.findNavController().navigate(R.id.homeFragment)
-//        }
     }
 
     private fun setupActionBar() {
@@ -93,7 +83,7 @@ class ArticleFragment : Fragment() {
             article.title.loadOrGone(selectedArticle.title.formatTitle())
             article.content.loadOrGone(selectedArticle.content.formatContent())
             article.description.loadOrGone(selectedArticle.description)
-            article.date.loadOrGone(selectedArticle.date.formatDateRemoveTime())
+            article.date.loadOrGone(selectedArticle.date.formatDate())
             article.source.loadOrGone(selectedArticle.source.name)
             Glide.with(requireContext()).load(selectedArticle.imgUrl).into(articleImage)
         }

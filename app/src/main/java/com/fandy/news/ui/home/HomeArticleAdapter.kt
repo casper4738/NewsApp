@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fandy.news.databinding.ArticleItemMainBinding
 import com.fandy.news.databinding.ArticleItemOtherBinding
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleHome
 import com.fandy.news.util.formatDate
 import com.fandy.news.util.formatTitle
 import com.fandy.news.util.loadImageOrDefault
 import com.fandy.news.util.loadOrGone
 
 class HomeArticleAdapter :
-    PagingDataAdapter<Article, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<ArticleHome, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == 0) {
@@ -50,12 +51,12 @@ class HomeArticleAdapter :
 
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<Article> =
-            object : DiffUtil.ItemCallback<Article>() {
-                override fun areItemsTheSame(oldItem: Article, newItem: Article) =
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<ArticleHome> =
+            object : DiffUtil.ItemCallback<ArticleHome>() {
+                override fun areItemsTheSame(oldItem: ArticleHome, newItem: ArticleHome) =
                     oldItem == newItem
 
-                override fun areContentsTheSame(oldItem: Article, newItem: Article) =
+                override fun areContentsTheSame(oldItem: ArticleHome, newItem: ArticleHome) =
                     oldItem.id == newItem.id
             }
     }
@@ -65,7 +66,7 @@ class HomeArticleAdapter :
 class ArticleItemMainViewHolder(private val binding: ArticleItemMainBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(articleItem: Article) {
+    fun bind(articleItem: ArticleHome) {
         binding.run {
             title.loadOrGone(articleItem.title.formatTitle())
             source.loadOrGone(articleItem.source.name)
@@ -76,15 +77,34 @@ class ArticleItemMainViewHolder(private val binding: ArticleItemMainBinding) :
         }
     }
 
-    private fun setOnClickListener(articleItem: Article) {
+    private fun setOnClickListener(articleItem: ArticleHome) {
         binding.detailItem.setOnClickListener { view ->
             navigateToDetail(articleItem, view)
         }
     }
 
-    private fun navigateToDetail(articleItem: Article, view: View) {
+    private fun navigateToDetail(articleItem: ArticleHome, view: View) {
+
         val directions =
-            HomeFragmentDirections.actionArticleListFragmentToArticleFragment(articleItem)
+            HomeFragmentDirections.actionArticleListFragmentToArticleFragment(
+                Article(
+                    id = articleItem.id,
+                    url = articleItem.url,
+                    author = articleItem.author,
+                    title = articleItem.title,
+                    description = articleItem.description,
+                    imgUrl = articleItem.imgUrl,
+                    date = articleItem.date,
+                    content = articleItem.content,
+                    source = articleItem.source,
+                    category = articleItem.category,
+                    language = articleItem.language,
+                    keyword = articleItem.keyword,
+                    from_date = articleItem.from_date,
+                    to_date = articleItem.to_date
+                )
+
+            )
         view.findNavController().navigate(directions)
     }
 
@@ -94,7 +114,7 @@ class ArticleItemMainViewHolder(private val binding: ArticleItemMainBinding) :
 class ArticleItemOtherViewHolder(private val binding: ArticleItemOtherBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(articleItem: Article) {
+    fun bind(articleItem: ArticleHome) {
         binding.run {
             title.loadOrGone(articleItem.title.formatTitle())
             source.loadOrGone(articleItem.source.name)
@@ -105,15 +125,30 @@ class ArticleItemOtherViewHolder(private val binding: ArticleItemOtherBinding) :
         }
     }
 
-    private fun setOnClickListener(articleItem: Article) {
+    private fun setOnClickListener(articleItem: ArticleHome) {
         binding.detailItem.setOnClickListener { view ->
             navigateToDetail(articleItem, view)
         }
     }
 
-    private fun navigateToDetail(articleItem: Article, view: View) {
+    private fun navigateToDetail(articleItem: ArticleHome, view: View) {
         val directions =
-            HomeFragmentDirections.actionArticleListFragmentToArticleFragment(articleItem)
+            HomeFragmentDirections.actionArticleListFragmentToArticleFragment(Article(
+                id = articleItem.id,
+                url = articleItem.url,
+                author = articleItem.author,
+                title = articleItem.title,
+                description = articleItem.description,
+                imgUrl = articleItem.imgUrl,
+                date = articleItem.date,
+                content = articleItem.content,
+                source = articleItem.source,
+                category = articleItem.category,
+                language = articleItem.language,
+                keyword = articleItem.keyword,
+                from_date = articleItem.from_date,
+                to_date = articleItem.to_date
+            ))
         view.findNavController().navigate(directions)
     }
 

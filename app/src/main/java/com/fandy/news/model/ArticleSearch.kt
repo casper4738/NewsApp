@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Article (
+@Entity(tableName = "article_search")
+data class ArticleSearch (
+    @PrimaryKey
     val id: String,
     val url: String,
     val author: String,

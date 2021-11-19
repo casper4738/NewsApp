@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.fandy.news.databinding.ArticleItemSearchBinding
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleSearch
 import com.fandy.news.util.formatDate
 import com.fandy.news.util.formatTitle
 import com.fandy.news.util.loadImageOrDefault
 import com.fandy.news.util.loadOrGone
 
 class SearchArticleAdapter :
-    PagingDataAdapter<Article, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<ArticleSearch, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -29,12 +30,12 @@ class SearchArticleAdapter :
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<Article> =
-            object : DiffUtil.ItemCallback<Article>() {
-                override fun areItemsTheSame(oldItem: Article, newItem: Article) =
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<ArticleSearch> =
+            object : DiffUtil.ItemCallback<ArticleSearch>() {
+                override fun areItemsTheSame(oldItem: ArticleSearch, newItem: ArticleSearch) =
                     oldItem == newItem
 
-                override fun areContentsTheSame(oldItem: Article, newItem: Article) =
+                override fun areContentsTheSame(oldItem: ArticleSearch, newItem: ArticleSearch) =
                     oldItem.id == newItem.id
             }
     }
@@ -45,7 +46,7 @@ class SearchArticleAdapter :
 class SearchArticleItemSearchViewHolder(private val binding: ArticleItemSearchBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(articleItem: Article) {
+    fun bind(articleItem: ArticleSearch) {
         binding.run {
             title.loadOrGone(articleItem.title.formatTitle())
             source.loadOrGone(articleItem.source.name)
@@ -56,15 +57,30 @@ class SearchArticleItemSearchViewHolder(private val binding: ArticleItemSearchBi
         }
     }
 
-    private fun setOnClickListener(articleItem: Article) {
+    private fun setOnClickListener(articleItem: ArticleSearch) {
         binding.detailItem.setOnClickListener { view ->
             navigateToDetail(articleItem, view)
         }
     }
 
-    private fun navigateToDetail(articleItem: Article, view: View) {
+    private fun navigateToDetail(articleItem: ArticleSearch, view: View) {
         val directions =
-            SearchFragmentDirections.actionSearchFragmentToArticleFragment(articleItem)
+            SearchFragmentDirections.actionSearchFragmentToArticleFragment(Article(
+                id = articleItem.id,
+                url = articleItem.url,
+                author = articleItem.author,
+                title = articleItem.title,
+                description = articleItem.description,
+                imgUrl = articleItem.imgUrl,
+                date = articleItem.date,
+                content = articleItem.content,
+                source = articleItem.source,
+                category = articleItem.category,
+                language = articleItem.language,
+                keyword = articleItem.keyword,
+                from_date = articleItem.from_date,
+                to_date = articleItem.to_date
+            ))
         view.findNavController().navigate(directions)
     }
 

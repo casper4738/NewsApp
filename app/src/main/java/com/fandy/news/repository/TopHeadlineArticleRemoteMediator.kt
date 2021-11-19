@@ -8,9 +8,11 @@ import androidx.room.withTransaction
 import com.fandy.news.api.NewsService
 import com.fandy.news.api.NewsResponse
 import com.fandy.news.api.asModel
+import com.fandy.news.api.asTopHeadlinesArticleModel
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.db.RemoteKey
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleTopHeadlines
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -25,19 +27,20 @@ import javax.inject.Singleton
  */
 @ExperimentalPagingApi
 @Singleton
-class TopArticleRemoteMediator @Inject constructor(
+class TopHeadlineArticleRemoteMediator @Inject constructor(
     private val language: String,
     private val category: String,
     private val service: NewsService,
     private val database: NewsDatabase
-) : RemoteMediator<Int, Article>() {
+) : RemoteMediator<Int, ArticleTopHeadlines>() {
 
+    private val typeArticle = "HOME"
     private val remoteKeyDao = database.remoteKeyDao()
     private val articleDao = database.articleDao()
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Article>
+        state: PagingState<Int, ArticleTopHeadlines>
     ): MediatorResult {
         try {
             val loadKey: Int = when (loadType) {
@@ -71,21 +74,21 @@ class TopArticleRemoteMediator @Inject constructor(
             // since Retrofit's Coroutine CallAdapter dispatches on a
             // worker thread.
             val apiResponse = newsResponse(loadKey, state)
-            val news = apiResponse.asModel()
+            val news = apiResponse.asTopHeadlinesArticleModel()
             val endOfPaginationReached = news.isEmpty()
 
             // Store loaded data, and next key in transaction, so that
             // they're always consistent.
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    remoteKeyDao.clearRemoteKeys()
-                    articleDao.clearNews()
+                    remoteKeyDao.clearRemoteKeys(typeArticle)
+                    articleDao.clearTopHeadlineArticle()
                 }
 
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1
                 val nextKey = if (endOfPaginationReached) null else loadKey + 1
                 val keys = news.map { article ->
-                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey)
+                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey, typeArticle = typeArticle)
                 }
 
                 for (article in news) {
@@ -93,7 +96,7 @@ class TopArticleRemoteMediator @Inject constructor(
                     article.category = category
                 }
 
-                articleDao.insertAll(news)
+                articleDao.insertTopHeadlineArticleAll(news)
                 remoteKeyDao.insertAll(keys)
             }
 
@@ -107,7 +110,7 @@ class TopArticleRemoteMediator @Inject constructor(
 
     private suspend fun newsResponse(
         loadKey: Int,
-        state: PagingState<Int, Article>
+        state: PagingState<Int, ArticleTopHeadlines>
     ): NewsResponse {
         return service.getTopArticles(
             language = language,
@@ -117,27 +120,27 @@ class TopArticleRemoteMediator @Inject constructor(
         )
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Article>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { articleId ->
-                remoteKeyDao.remoteKeyByArticle(articleId)
+                remoteKeyDao.remoteKeyByArticle(articleId, typeArticle)
             }
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Article>): RemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
         return state.pages.lastOrNull {
             it.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { lastArticle ->
-            remoteKeyDao.remoteKeyByArticle(lastArticle.id)
+            remoteKeyDao.remoteKeyByArticle(lastArticle.id, typeArticle)
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Article>): RemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
         return state.pages.firstOrNull {
             it.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { firstArticle ->
-            remoteKeyDao.remoteKeyByArticle(firstArticle.id)
+            remoteKeyDao.remoteKeyByArticle(firstArticle.id, typeArticle)
         }
     }
 

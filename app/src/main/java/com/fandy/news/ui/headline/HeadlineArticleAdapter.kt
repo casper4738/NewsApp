@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fandy.news.databinding.ArticleItemMainBinding
 import com.fandy.news.databinding.ArticleItemOtherBinding
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleTopHeadlines
 import com.fandy.news.util.formatDate
 import com.fandy.news.util.formatTitle
 import com.fandy.news.util.loadImageOrDefault
 import com.fandy.news.util.loadOrGone
 
 class HeadlineArticleAdapter :
-    PagingDataAdapter<Article, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<ArticleTopHeadlines, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == 0) {
@@ -46,12 +47,12 @@ class HeadlineArticleAdapter :
 
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<Article> =
-            object : DiffUtil.ItemCallback<Article>() {
-                override fun areItemsTheSame(oldItem: Article, newItem: Article) =
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<ArticleTopHeadlines> =
+            object : DiffUtil.ItemCallback<ArticleTopHeadlines>() {
+                override fun areItemsTheSame(oldItem: ArticleTopHeadlines, newItem: ArticleTopHeadlines) =
                     oldItem == newItem
 
-                override fun areContentsTheSame(oldItem: Article, newItem: Article) =
+                override fun areContentsTheSame(oldItem: ArticleTopHeadlines, newItem: ArticleTopHeadlines) =
                     oldItem.id == newItem.id
             }
     }
@@ -61,7 +62,7 @@ class HeadlineArticleAdapter :
 class HeadlineArticleItemMainViewHolder(private val binding: ArticleItemMainBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(articleItem: Article) {
+    fun bind(articleItem: ArticleTopHeadlines) {
         binding.run {
             title.loadOrGone(articleItem.title.formatTitle())
             source.loadOrGone(articleItem.source.name)
@@ -72,15 +73,30 @@ class HeadlineArticleItemMainViewHolder(private val binding: ArticleItemMainBind
         }
     }
 
-    private fun setOnClickListener(articleItem: Article) {
+    private fun setOnClickListener(articleItem: ArticleTopHeadlines) {
         binding.detailItem.setOnClickListener { view ->
             navigateToDetail(articleItem, view)
         }
     }
 
-    private fun navigateToDetail(articleItem: Article, view: View) {
+    private fun navigateToDetail(articleItem: ArticleTopHeadlines, view: View) {
         val directions =
-            HeadlineFragmentDirections.actionHeadlineFragmentToArticleFragment(articleItem)
+            HeadlineFragmentDirections.actionHeadlineFragmentToArticleFragment(Article(
+                id = articleItem.id,
+                url = articleItem.url,
+                author = articleItem.author,
+                title = articleItem.title,
+                description = articleItem.description,
+                imgUrl = articleItem.imgUrl,
+                date = articleItem.date,
+                content = articleItem.content,
+                source = articleItem.source,
+                category = articleItem.category,
+                language = articleItem.language,
+                keyword = articleItem.keyword,
+                from_date = articleItem.from_date,
+                to_date = articleItem.to_date
+            ))
         view.findNavController().navigate(directions)
     }
 
@@ -90,7 +106,7 @@ class HeadlineArticleItemMainViewHolder(private val binding: ArticleItemMainBind
 class HeadlineArticleItemOtherViewHolder(private val binding: ArticleItemOtherBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(articleItem: Article) {
+    fun bind(articleItem: ArticleTopHeadlines) {
         binding.run {
             title.loadOrGone(articleItem.title.formatTitle())
             source.loadOrGone(articleItem.source.name)
@@ -101,15 +117,30 @@ class HeadlineArticleItemOtherViewHolder(private val binding: ArticleItemOtherBi
         }
     }
 
-    private fun setOnClickListener(articleItem: Article) {
+    private fun setOnClickListener(articleItem: ArticleTopHeadlines) {
         binding.detailItem.setOnClickListener { view ->
             navigateToDetail(articleItem, view)
         }
     }
 
-    private fun navigateToDetail(articleItem: Article, view: View) {
+    private fun navigateToDetail(articleItem: ArticleTopHeadlines, view: View) {
         val directions =
-            HeadlineFragmentDirections.actionHeadlineFragmentToArticleFragment(articleItem)
+            HeadlineFragmentDirections.actionHeadlineFragmentToArticleFragment(Article(
+                id = articleItem.id,
+                url = articleItem.url,
+                author = articleItem.author,
+                title = articleItem.title,
+                description = articleItem.description,
+                imgUrl = articleItem.imgUrl,
+                date = articleItem.date,
+                content = articleItem.content,
+                source = articleItem.source,
+                category = articleItem.category,
+                language = articleItem.language,
+                keyword = articleItem.keyword,
+                from_date = articleItem.from_date,
+                to_date = articleItem.to_date
+            ))
         view.findNavController().navigate(directions)
     }
 

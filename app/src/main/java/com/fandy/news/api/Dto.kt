@@ -1,7 +1,6 @@
 package com.fandy.news.api
 
-import com.fandy.news.model.Article
-import com.fandy.news.model.Source
+import com.fandy.news.model.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -36,9 +35,47 @@ fun SourceDTO.asModel(): Source {
 /**
  * Mapping ArticleDTO to model Article.
  */
-fun NewsResponse.asModel(): List<Article> {
+fun NewsResponse.asHomeArticleModel(): List<ArticleHome> {
     return articleDTO.map {
-        Article(
+        ArticleHome(
+            id = it.title+System.currentTimeMillis(),
+            url = it.url?: "",
+            author = it.author ?: "",
+            title = it.title ?: "",
+            description = it.description ?: "",
+            imgUrl = it.imgUrl ?: "",
+            date = it.date ?: "",
+            content = it.content ?: "",
+            source = it.source.asModel()
+        )
+    }
+}
+
+/**
+ * Mapping ArticleDTO to model Article.
+ */
+fun NewsResponse.asTopHeadlinesArticleModel(): List<ArticleTopHeadlines> {
+    return articleDTO.map {
+        ArticleTopHeadlines(
+            id = it.title+System.currentTimeMillis(),
+            url = it.url?: "",
+            author = it.author ?: "",
+            title = it.title ?: "",
+            description = it.description ?: "",
+            imgUrl = it.imgUrl ?: "",
+            date = it.date ?: "",
+            content = it.content ?: "",
+            source = it.source.asModel()
+        )
+    }
+}
+
+/**
+ * Mapping ArticleDTO to model Article.
+ */
+fun NewsResponse.asSearchArticleModel(): List<ArticleSearch> {
+    return articleDTO.map {
+        ArticleSearch(
             id = it.title+System.currentTimeMillis(),
             url = it.url?: "",
             author = it.author ?: "",

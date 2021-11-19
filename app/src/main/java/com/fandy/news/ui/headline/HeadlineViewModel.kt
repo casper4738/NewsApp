@@ -8,6 +8,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleTopHeadlines
 import com.fandy.news.repository.NewsRepository
 import com.fandy.news.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,17 +22,17 @@ class HeadlineViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var currentNews: Flow<PagingData<Article>>? = null
+    private var currentNews: Flow<PagingData<ArticleTopHeadlines>>? = null
     private val _categoryLocalizedLiveData: MutableLiveData<Int> =
         MutableLiveData(getLastSavedLocalizedCategory())
 
-    fun loadTopArticles(category: String, language: String = ""): Flow<PagingData<Article>> {
+    fun loadTopArticles(category: String, language: String = ""): Flow<PagingData<ArticleTopHeadlines>> {
         val lastResult = currentNews
         if (lastResult != null && !shouldRefresh(language, category))
             return lastResult
 
         val newNews =
-            repository.fetchTopArticles(language, category).cachedIn(viewModelScope)
+            repository.fetchTopHeadlinesArticles(language, category).cachedIn(viewModelScope)
         currentNews = newNews
 
         //Save new filters after checks are made to establish, if the news should be refreshed.

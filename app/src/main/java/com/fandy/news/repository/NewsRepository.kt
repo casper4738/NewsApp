@@ -7,6 +7,9 @@ import androidx.paging.PagingData
 import com.fandy.news.api.NewsService
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleHome
+import com.fandy.news.model.ArticleSearch
+import com.fandy.news.model.ArticleTopHeadlines
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -28,31 +31,47 @@ class NewsRepository @Inject constructor(
 ) {
 
     @ExperimentalPagingApi
-    fun fetchTopArticles(language: String, category: String): Flow<PagingData<Article>> {
+    fun fetchTopHeadlinesArticles(language: String, category: String): Flow<PagingData<ArticleTopHeadlines>> {
         val pagingSourceFactory =
-            { database.articleDao().getNewsByLanguageAndCategory(language, category) }
+            { database.articleDao().getTopHeadlineArticle(language, category) }
         return Pager(
             config = PagingConfig(NETWORK_PAGE_SIZE, maxSize = 300, enablePlaceholders = true),
-            remoteMediator = TopArticleRemoteMediator(language, category, service, database),
+            remoteMediator = TopHeadlineArticleRemoteMediator(language, category, service, database),
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
 
-    @ExperimentalPagingApi
-    fun fetchAllArticles(keyword: String, from: String, to: String): Flow<PagingData<Article>> {
-        val pagingSourceFactory =
-            { database.articleDao().getNewsByKeywordAndFromAndTo(keyword, from, to) }
-        return Pager(
-            config = PagingConfig(NETWORK_PAGE_SIZE, maxSize = 300, enablePlaceholders = true),
-            remoteMediator = AllArticleRemoteMediator(keyword, from, to, service, database),
-            pagingSourceFactory = pagingSourceFactory
-        ).flow
-    }
-
-    fun getArticle(id: String) = flow {
-        val article = database.articleDao().getNewsById(id)
+    fun getTopHeadlineArticleById(id: String) = flow {
+        val article = database.articleDao().getTopHeadlineArticleById(id)
         emit(article)
     }.flowOn(Dispatchers.Default)
+
+    @ExperimentalPagingApi
+    fun fetchEverythingArticles(keyword: String, language: String): Flow<PagingData<ArticleHome>> {
+        val pagingSourceFactory =
+            { database.articleDao().getHomeArticle(keyword, language) }
+        return Pager(
+            config = PagingConfig(NETWORK_PAGE_SIZE, maxSize = 300, enablePlaceholders = true),
+            remoteMediator = HomeArticleRemoteMediator(keyword, language, service, database),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
+
+    fun getHomeArticleById(id: String) = flow {
+        val article = database.articleDao().getHomeArticleById(id)
+        emit(article)
+    }.flowOn(Dispatchers.Default)
+
+    @ExperimentalPagingApi
+    fun searchArticles(keyword: String, language: String): Flow<PagingData<ArticleSearch>> {
+        val pagingSourceFactory =
+            { database.articleDao().searchArticle(keyword, language) }
+        return Pager(
+            config = PagingConfig(NETWORK_PAGE_SIZE, maxSize = 300, enablePlaceholders = true),
+            remoteMediator = SearchArticleRemoteMediator(keyword, language, service, database),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 20

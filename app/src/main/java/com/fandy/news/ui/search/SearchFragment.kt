@@ -85,7 +85,7 @@ class SearchFragment : Fragment() {
     private fun getAllNews(querySearch: String) {
         job?.cancel()
         job = lifecycleScope.launch {
-            viewModel.loadAllArticles(querySearch, "", "")
+            viewModel.search(querySearch, "en")
                 .collectLatest { adapter.submitData(it) }
         }
 

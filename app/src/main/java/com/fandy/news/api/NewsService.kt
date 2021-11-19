@@ -11,7 +11,7 @@ interface NewsService {
 
     @GET("top-headlines")
     suspend fun getTopArticles(
-        @Query("language") language: String = "",
+        @Query("language") language: String = "en",
         @Query("country") country: String = "id",
         @Query("apiKey") apiKey: String = NEWS_API_KEY,
         @Query("category") category: String =  "",
@@ -20,12 +20,10 @@ interface NewsService {
     ): NewsResponse
 
     @GET("everything")
-    suspend fun getAllArticles(
+    suspend fun getEverthingArticles(
         @Query("q") keyword: String = "",
         @Query("language") language: String = "en",
         @Query("apiKey") apiKey: String = NEWS_API_KEY,
-        @Query("from") from: String =  "",
-        @Query("to") to: String =  "",
         @Query("page") page: Int = 0,
         @Query("pageSize") pageSize: Int = 0
     ): NewsResponse

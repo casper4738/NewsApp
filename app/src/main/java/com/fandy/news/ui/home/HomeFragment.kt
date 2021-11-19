@@ -1,7 +1,6 @@
 package com.fandy.news.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -85,7 +84,7 @@ class HomeFragment : Fragment() {
     private fun getAllNews() {
         job?.cancel()
         job = lifecycleScope.launch {
-            viewModel.loadAllArticles("business", "", "")
+            viewModel.loadAllArticles("business", "en")
                 .collectLatest {
                     adapterHome.submitData(it)
                 }

@@ -6,22 +6,46 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleHome
+import com.fandy.news.model.ArticleSearch
+import com.fandy.news.model.ArticleTopHeadlines
 
 @Dao
 interface ArticleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(news: List<Article>)
+    suspend fun insertTopHeadlineArticleAll(news: List<ArticleTopHeadlines>)
 
-    @Query("SELECT * FROM article_table WHERE language = :language AND category = :category")
-    fun getNewsByLanguageAndCategory(language: String, category: String): PagingSource<Int, Article>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertHomeArticleAll(news: List<ArticleHome>)
 
-    @Query("SELECT * FROM article_table WHERE keyword = :keyword AND from_date = :from AND to_date = :to")
-    fun getNewsByKeywordAndFromAndTo(keyword: String, from: String, to: String): PagingSource<Int, Article>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchArticleAll(news: List<ArticleSearch>)
 
-    @Query("DELETE FROM article_table")
-    suspend fun clearNews()
+    @Query("SELECT * FROM article_top_headlines WHERE language = :language AND category = :category")
+    fun getTopHeadlineArticle(language: String, category: String): PagingSource<Int, ArticleTopHeadlines>
 
-    @Query("SELECT * FROM article_table WHERE id = :id")
-    suspend fun getNewsById(id: String): Article
+    @Query("SELECT * FROM article_home WHERE keyword = :keyword AND language = :language ")
+    fun getHomeArticle(keyword: String, language: String): PagingSource<Int, ArticleHome>
+
+    @Query("SELECT * FROM article_search WHERE keyword = :keyword AND language = :language ")
+    fun searchArticle(keyword: String, language: String): PagingSource<Int, ArticleSearch>
+
+    @Query("DELETE FROM article_top_headlines")
+    suspend fun clearTopHeadlineArticle()
+
+    @Query("DELETE FROM article_home")
+    suspend fun clearHomeArticle()
+
+    @Query("DELETE FROM article_search")
+    suspend fun clearSearchArticle()
+
+    @Query("SELECT * FROM article_top_headlines WHERE id = :id")
+    suspend fun getTopHeadlineArticleById(id: String): ArticleTopHeadlines
+
+    @Query("SELECT * FROM article_home WHERE id = :id")
+    suspend fun getHomeArticleById(id: String): ArticleHome
+
+    @Query("SELECT * FROM article_search WHERE id = :id")
+    suspend fun searchArticleById(id: String): ArticleSearch
 }

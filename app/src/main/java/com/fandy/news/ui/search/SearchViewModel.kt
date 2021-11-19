@@ -5,6 +5,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleSearch
 import com.fandy.news.repository.NewsRepository
 import com.fandy.news.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,19 +24,19 @@ class SearchViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var currentNews: Flow<PagingData<Article>>? = null
+    private var currentNews: Flow<PagingData<ArticleSearch>>? = null
     private val _categoryLocalizedLiveData: MutableLiveData<Int> =
         MutableLiveData(getLastSavedLocalizedCategory())
 
 
-    fun loadAllArticles(keyword: String, from: String = "", to: String = ""): Flow<PagingData<Article>> {
+    fun search(keyword: String, language: String): Flow<PagingData<ArticleSearch>> {
 
         val lastResult = currentNews
         if (lastResult != null && !shouldRefresh(keyword, ""))
             return lastResult
 
         val newNews =
-            repository.fetchAllArticles(keyword, from, to).cachedIn(viewModelScope)
+            repository.searchArticles(keyword, language).cachedIn(viewModelScope)
         currentNews = newNews
 
         //Save new filters after checks are made to establish, if the news should be refreshed.
@@ -64,11 +65,6 @@ class SearchViewModel @Inject constructor(
         .getLiveData<Int>(
             SAVED_STATE_LOCAL_TITLE
         ).value ?: DEFAULT_TITLE
-
-
-    fun saveCategoryFiltering(category: String) {
-        savedStateHandle.set(SAVED_STATE_CATEGORY, category)
-    }
 
     fun saveLanguageFiltering(language: String) {
         savedStateHandle.set(SAVED_STATE_LANGUAGE, language)

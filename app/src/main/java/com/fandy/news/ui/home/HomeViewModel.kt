@@ -5,6 +5,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleHome
 import com.fandy.news.repository.NewsRepository
 import com.fandy.news.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,36 +24,19 @@ class HomeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var currentNews: Flow<PagingData<Article>>? = null
+    private var currentNews: Flow<PagingData<ArticleHome>>? = null
     private val _categoryLocalizedLiveData: MutableLiveData<Int> =
         MutableLiveData(getLastSavedLocalizedCategory())
 
 
-    fun loadTopArticles(category: String, language: String = ""): Flow<PagingData<Article>> {
-        val lastResult = currentNews
-        if (lastResult != null && !shouldRefresh(language, category))
-            return lastResult
-
-        val newNews =
-            repository.fetchTopArticles(language, category).cachedIn(viewModelScope)
-        currentNews = newNews
-
-        //Save new filters after checks are made to establish, if the news should be refreshed.
-        saveCategoryFiltering(category)
-        saveLanguageFiltering(language)
-        saveCategoryLocalized()
-
-        return newNews
-    }
-
-    fun loadAllArticles(keyword: String, from: String = "", to: String = ""): Flow<PagingData<Article>> {
+    fun loadAllArticles(keyword: String, language: String): Flow<PagingData<ArticleHome>> {
 
         val lastResult = currentNews
         if (lastResult != null && !shouldRefresh(keyword, ""))
             return lastResult
 
         val newNews =
-            repository.fetchAllArticles(keyword, from, to).cachedIn(viewModelScope)
+            repository.fetchEverythingArticles(keyword, language).cachedIn(viewModelScope)
         currentNews = newNews
 
         //Save new filters after checks are made to establish, if the news should be refreshed.
@@ -82,10 +66,6 @@ class HomeViewModel @Inject constructor(
             SAVED_STATE_LOCAL_TITLE
         ).value ?: DEFAULT_TITLE
 
-
-    fun saveCategoryFiltering(category: String) {
-        savedStateHandle.set(SAVED_STATE_CATEGORY, category)
-    }
 
     fun saveLanguageFiltering(language: String) {
         savedStateHandle.set(SAVED_STATE_LANGUAGE, language)

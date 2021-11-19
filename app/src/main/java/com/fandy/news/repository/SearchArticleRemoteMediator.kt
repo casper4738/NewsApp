@@ -5,12 +5,14 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.fandy.news.api.NewsService
-import com.fandy.news.api.NewsResponse
-import com.fandy.news.api.asModel
+import com.fandy.news.api.*
+import com.fandy.news.api.asHomeArticleModel
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.db.RemoteKey
 import com.fandy.news.model.Article
+import com.fandy.news.model.ArticleHome
+import com.fandy.news.model.ArticleSearch
+import com.fandy.news.model.ArticleTopHeadlines
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -25,20 +27,20 @@ import javax.inject.Singleton
  */
 @ExperimentalPagingApi
 @Singleton
-class AllArticleRemoteMediator @Inject constructor(
+class SearchArticleRemoteMediator @Inject constructor(
     private val keyword: String,
-    private val from: String,
-    private val to: String,
+    private val language: String,
     private val service: NewsService,
     private val database: NewsDatabase
-) : RemoteMediator<Int, Article>() {
+) : RemoteMediator<Int, ArticleSearch>() {
 
+    private val typeArticle = "HOME"
     private val remoteKeyDao = database.remoteKeyDao()
     private val articleDao = database.articleDao()
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Article>
+        state: PagingState<Int, ArticleSearch>
     ): MediatorResult {
         try {
             val loadKey: Int = when (loadType) {
@@ -72,30 +74,29 @@ class AllArticleRemoteMediator @Inject constructor(
             // since Retrofit's Coroutine CallAdapter dispatches on a
             // worker thread.
             val apiResponse = newsResponse(loadKey, state)
-            val news = apiResponse.asModel()
+            val news = apiResponse.asSearchArticleModel()
             val endOfPaginationReached = news.isEmpty()
 
             // Store loaded data, and next key in transaction, so that
             // they're always consistent.
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    remoteKeyDao.clearRemoteKeys()
-                    articleDao.clearNews()
+                    remoteKeyDao.clearRemoteKeys(typeArticle)
+                    articleDao.clearHomeArticle()
                 }
 
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1
                 val nextKey = if (endOfPaginationReached) null else loadKey + 1
                 val keys = news.map { article ->
-                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey)
+                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey, typeArticle = typeArticle)
                 }
 
                 for (article in news) {
                     article.keyword = keyword
-                    article.from_date = from
-                    article.to_date = to
+                    article.language = language
                 }
 
-                articleDao.insertAll(news)
+                articleDao.insertSearchArticleAll(news)
                 remoteKeyDao.insertAll(keys)
             }
 
@@ -109,38 +110,37 @@ class AllArticleRemoteMediator @Inject constructor(
 
     private suspend fun newsResponse(
         loadKey: Int,
-        state: PagingState<Int, Article>
+        state: PagingState<Int, ArticleSearch>
     ): NewsResponse {
-        return service.getAllArticles(
+        return service.getEverthingArticles(
             keyword = keyword,
-            from = from,
-            to = to,
+            language = language,
             page = loadKey,
             pageSize = state.config.pageSize
         )
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Article>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleSearch>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { articleId ->
-                remoteKeyDao.remoteKeyByArticle(articleId)
+                remoteKeyDao.remoteKeyByArticle(articleId, typeArticle)
             }
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Article>): RemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleSearch>): RemoteKey? {
         return state.pages.lastOrNull {
             it.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { lastArticle ->
-            remoteKeyDao.remoteKeyByArticle(lastArticle.id)
+            remoteKeyDao.remoteKeyByArticle(lastArticle.id, typeArticle)
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Article>): RemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleSearch>): RemoteKey? {
         return state.pages.firstOrNull {
             it.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { firstArticle ->
-            remoteKeyDao.remoteKeyByArticle(firstArticle.id)
+            remoteKeyDao.remoteKeyByArticle(firstArticle.id, typeArticle)
         }
     }
 

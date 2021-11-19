@@ -34,7 +34,7 @@ class SearchArticleRemoteMediator @Inject constructor(
     private val database: NewsDatabase
 ) : RemoteMediator<Int, ArticleSearch>() {
 
-    private val typeArticle = "HOME"
+    private val typeArticle = "SEARCH"
     private val remoteKeyDao = database.remoteKeyDao()
     private val articleDao = database.articleDao()
 
@@ -88,7 +88,12 @@ class SearchArticleRemoteMediator @Inject constructor(
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1
                 val nextKey = if (endOfPaginationReached) null else loadKey + 1
                 val keys = news.map { article ->
-                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey, typeArticle = typeArticle)
+                    RemoteKey(
+                        articleId = article.id,
+                        nextKey = nextKey,
+                        prevKey = prevKey,
+                        typeArticle = typeArticle
+                    )
                 }
 
                 for (article in news) {

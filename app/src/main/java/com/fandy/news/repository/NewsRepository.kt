@@ -41,11 +41,6 @@ class NewsRepository @Inject constructor(
         ).flow
     }
 
-    fun getTopHeadlineArticleById(id: String) = flow {
-        val article = database.articleDao().getTopHeadlineArticleById(id)
-        emit(article)
-    }.flowOn(Dispatchers.Default)
-
     @ExperimentalPagingApi
     fun fetchEverythingArticles(keyword: String, language: String): Flow<PagingData<ArticleHome>> {
         val pagingSourceFactory =
@@ -56,11 +51,6 @@ class NewsRepository @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
-
-    fun getHomeArticleById(id: String) = flow {
-        val article = database.articleDao().getHomeArticleById(id)
-        emit(article)
-    }.flowOn(Dispatchers.Default)
 
     @ExperimentalPagingApi
     fun searchArticles(keyword: String, language: String): Flow<PagingData<ArticleSearch>> {

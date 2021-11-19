@@ -47,7 +47,6 @@ class ArticleFragment : Fragment() {
         articleViewModel.openWebsiteEvent.observe(viewLifecycleOwner, EventObserver { articleUrl ->
             openWebsite(articleUrl)
         })
-
         return binding.root
     }
 

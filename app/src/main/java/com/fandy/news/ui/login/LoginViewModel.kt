@@ -9,6 +9,7 @@ import com.fandy.news.model.LoginUser
 import com.fandy.news.repository.LoginRepository
 import com.fandy.news.repository.MyPreference
 import com.fandy.news.security.SecurityEncryption
+import com.fandy.news.util.SingleEvent
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -34,8 +35,8 @@ class LoginViewModel @Inject constructor(
     val errorState: LiveData<ErrorState?>
         get() = _errorState
 
-    private val _loginUser = MutableLiveData<LoginUser?>()
-    val loginUser: LiveData<LoginUser?>
+    private val _loginUser = MutableLiveData<SingleEvent<LoginUser?>>()
+    val loginUser: LiveData<SingleEvent<LoginUser?>>
         get() = _loginUser
 
 
@@ -56,7 +57,7 @@ class LoginViewModel @Inject constructor(
                             username = it.username ?: "",
                             email = it.email ?: ""
                         )
-                        _loginUser.postValue(loginUser)
+                        _loginUser.postValue(SingleEvent(loginUser))
 
                         myPreference.setStored("login.username", loginUser.username)
                         myPreference.setStored("login.fullName", loginUser.fullName)
@@ -76,6 +77,10 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun isLogin(): Boolean {
+        return myPreference.getStoredBoolean("login.isSuccess")
     }
 
     private fun onError(message: String) {

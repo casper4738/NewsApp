@@ -13,6 +13,7 @@ import com.fandy.news.databinding.LoginFragmentBinding
 import com.fandy.news.model.LoginRequest
 import dagger.hilt.android.AndroidEntryPoint
 import com.fandy.news.ui.MainActivity
+import com.fandy.news.util.EventObserver
 
 
 @AndroidEntryPoint
@@ -37,7 +38,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setObserve() {
-        loginViewModel.loginUser.observe(viewLifecycleOwner) { response ->
+        loginViewModel.loginUser.observe(viewLifecycleOwner, EventObserver { response ->
             response?.let {
                 loginReset()
 
@@ -45,7 +46,7 @@ class LoginFragment : Fragment() {
                 view?.findNavController()?.navigate(R.id.userProfileFragment)
                 (activity as MainActivity).onUserInteraction()
             }
-        }
+        })
 
         loginViewModel.errorState.observe(viewLifecycleOwner) { response ->
             response?.let {

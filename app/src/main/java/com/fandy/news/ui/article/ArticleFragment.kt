@@ -38,12 +38,6 @@ class ArticleFragment : Fragment() {
         setupActionBar()
         setupOpenWebsiteButton()
 
-//        articleViewModel.fetchArticle(article.id)
-
-//        articleViewModel.articleLiveData.observe(viewLifecycleOwner) { article ->
-//            displayArticle(article)
-//        }
-
         displayArticle(article)
 
         articleViewModel.shareArticleEvent.observe(viewLifecycleOwner, EventObserver { articleUrl ->

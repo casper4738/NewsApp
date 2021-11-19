@@ -1,18 +1,16 @@
-package com.fandy.news.repository
+package com.fandy.news.repository.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.fandy.news.api.*
+import com.fandy.news.api.NewsService
+import com.fandy.news.api.NewsResponse
 import com.fandy.news.api.asHomeArticleModel
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.db.RemoteKey
-import com.fandy.news.model.Article
 import com.fandy.news.model.ArticleHome
-import com.fandy.news.model.ArticleSearch
-import com.fandy.news.model.ArticleTopHeadlines
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -27,20 +25,20 @@ import javax.inject.Singleton
  */
 @ExperimentalPagingApi
 @Singleton
-class SearchArticleRemoteMediator @Inject constructor(
+class HomeArticleRemoteMediator @Inject constructor(
     private val keyword: String,
     private val language: String,
     private val service: NewsService,
     private val database: NewsDatabase
-) : RemoteMediator<Int, ArticleSearch>() {
+) : RemoteMediator<Int, ArticleHome>() {
 
-    private val typeArticle = "SEARCH"
+    private val typeArticle = "HOME"
     private val remoteKeyDao = database.remoteKeyDao()
     private val articleDao = database.articleDao()
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleSearch>
+        state: PagingState<Int, ArticleHome>
     ): MediatorResult {
         try {
             val loadKey: Int = when (loadType) {
@@ -74,7 +72,7 @@ class SearchArticleRemoteMediator @Inject constructor(
             // since Retrofit's Coroutine CallAdapter dispatches on a
             // worker thread.
             val apiResponse = newsResponse(loadKey, state)
-            val news = apiResponse.asSearchArticleModel()
+            val news = apiResponse.asHomeArticleModel()
             val endOfPaginationReached = news.isEmpty()
 
             // Store loaded data, and next key in transaction, so that
@@ -82,18 +80,13 @@ class SearchArticleRemoteMediator @Inject constructor(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     remoteKeyDao.clearRemoteKeys(typeArticle)
-                    articleDao.clearSearchArticle()
+                    articleDao.clearHomeArticle()
                 }
 
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1
                 val nextKey = if (endOfPaginationReached) null else loadKey + 1
                 val keys = news.map { article ->
-                    RemoteKey(
-                        articleId = article.id,
-                        nextKey = nextKey,
-                        prevKey = prevKey,
-                        typeArticle = typeArticle
-                    )
+                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey, typeArticle = typeArticle)
                 }
 
                 for (article in news) {
@@ -101,7 +94,7 @@ class SearchArticleRemoteMediator @Inject constructor(
                     article.language = language
                 }
 
-                articleDao.insertSearchArticleAll(news)
+                articleDao.insertHomeArticleAll(news)
                 remoteKeyDao.insertAll(keys)
             }
 
@@ -115,7 +108,7 @@ class SearchArticleRemoteMediator @Inject constructor(
 
     private suspend fun newsResponse(
         loadKey: Int,
-        state: PagingState<Int, ArticleSearch>
+        state: PagingState<Int, ArticleHome>
     ): NewsResponse {
         return service.getEverthingArticles(
             keyword = keyword,
@@ -125,7 +118,7 @@ class SearchArticleRemoteMediator @Inject constructor(
         )
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleSearch>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleHome>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { articleId ->
                 remoteKeyDao.remoteKeyByArticle(articleId, typeArticle)
@@ -133,7 +126,7 @@ class SearchArticleRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleSearch>): RemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleHome>): RemoteKey? {
         return state.pages.lastOrNull {
             it.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { lastArticle ->
@@ -141,7 +134,7 @@ class SearchArticleRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleSearch>): RemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleHome>): RemoteKey? {
         return state.pages.firstOrNull {
             it.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { firstArticle ->

@@ -6,14 +6,13 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.fandy.news.api.NewsService
 import com.fandy.news.db.NewsDatabase
-import com.fandy.news.model.Article
 import com.fandy.news.model.ArticleHome
 import com.fandy.news.model.ArticleSearch
 import com.fandy.news.model.ArticleTopHeadlines
-import kotlinx.coroutines.Dispatchers
+import com.fandy.news.repository.mediator.HomeArticleRemoteMediator
+import com.fandy.news.repository.mediator.SearchArticleRemoteMediator
+import com.fandy.news.repository.mediator.TopHeadlineArticleRemoteMediator
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 

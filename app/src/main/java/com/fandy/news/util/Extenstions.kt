@@ -103,5 +103,5 @@ fun ImageView.loadImageOrDefault(imgUrl: String) {
                 .error(R.drawable.ic_load))
             .into(this)
     else
-        Glide.with(this).asGif().load(R.raw.loading).into(this);
+        Glide.with(this).asGif().load(R.drawable.ic_loading).into(this);
 }

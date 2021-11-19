@@ -1,18 +1,14 @@
-package com.fandy.news.repository
+package com.fandy.news.repository.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.fandy.news.api.NewsService
-import com.fandy.news.api.NewsResponse
-import com.fandy.news.api.asModel
-import com.fandy.news.api.asTopHeadlinesArticleModel
+import com.fandy.news.api.*
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.db.RemoteKey
-import com.fandy.news.model.Article
-import com.fandy.news.model.ArticleTopHeadlines
+import com.fandy.news.model.ArticleSearch
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -27,20 +23,20 @@ import javax.inject.Singleton
  */
 @ExperimentalPagingApi
 @Singleton
-class TopHeadlineArticleRemoteMediator @Inject constructor(
+class SearchArticleRemoteMediator @Inject constructor(
+    private val keyword: String,
     private val language: String,
-    private val category: String,
     private val service: NewsService,
     private val database: NewsDatabase
-) : RemoteMediator<Int, ArticleTopHeadlines>() {
+) : RemoteMediator<Int, ArticleSearch>() {
 
-    private val typeArticle = "HOME"
+    private val typeArticle = "SEARCH"
     private val remoteKeyDao = database.remoteKeyDao()
     private val articleDao = database.articleDao()
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleTopHeadlines>
+        state: PagingState<Int, ArticleSearch>
     ): MediatorResult {
         try {
             val loadKey: Int = when (loadType) {
@@ -64,7 +60,7 @@ class TopHeadlineArticleRemoteMediator @Inject constructor(
 
                     val remoteKey = getRemoteKeyForLastItem(state)
                     if (remoteKey?.nextKey == null)
-                        throw InvalidObjectException("Something went wrong")
+                        return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
                     remoteKey.nextKey
                 }
             }
@@ -74,7 +70,7 @@ class TopHeadlineArticleRemoteMediator @Inject constructor(
             // since Retrofit's Coroutine CallAdapter dispatches on a
             // worker thread.
             val apiResponse = newsResponse(loadKey, state)
-            val news = apiResponse.asTopHeadlinesArticleModel()
+            val news = apiResponse.asSearchArticleModel()
             val endOfPaginationReached = news.isEmpty()
 
             // Store loaded data, and next key in transaction, so that
@@ -82,21 +78,26 @@ class TopHeadlineArticleRemoteMediator @Inject constructor(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     remoteKeyDao.clearRemoteKeys(typeArticle)
-                    articleDao.clearTopHeadlineArticle()
+                    articleDao.clearSearchArticle()
                 }
 
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1
                 val nextKey = if (endOfPaginationReached) null else loadKey + 1
                 val keys = news.map { article ->
-                    RemoteKey(articleId = article.id, nextKey = nextKey, prevKey = prevKey, typeArticle = typeArticle)
+                    RemoteKey(
+                        articleId = article.id,
+                        nextKey = nextKey,
+                        prevKey = prevKey,
+                        typeArticle = typeArticle
+                    )
                 }
 
                 for (article in news) {
+                    article.keyword = keyword
                     article.language = language
-                    article.category = category
                 }
 
-                articleDao.insertTopHeadlineArticleAll(news)
+                articleDao.insertSearchArticleAll(news)
                 remoteKeyDao.insertAll(keys)
             }
 
@@ -110,17 +111,17 @@ class TopHeadlineArticleRemoteMediator @Inject constructor(
 
     private suspend fun newsResponse(
         loadKey: Int,
-        state: PagingState<Int, ArticleTopHeadlines>
+        state: PagingState<Int, ArticleSearch>
     ): NewsResponse {
-        return service.getTopArticles(
+        return service.getEverthingArticles(
+            keyword = keyword,
             language = language,
-            category = category,
             page = loadKey,
             pageSize = state.config.pageSize
         )
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleSearch>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { articleId ->
                 remoteKeyDao.remoteKeyByArticle(articleId, typeArticle)
@@ -128,7 +129,7 @@ class TopHeadlineArticleRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleSearch>): RemoteKey? {
         return state.pages.lastOrNull {
             it.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { lastArticle ->
@@ -136,7 +137,7 @@ class TopHeadlineArticleRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleSearch>): RemoteKey? {
         return state.pages.firstOrNull {
             it.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { firstArticle ->

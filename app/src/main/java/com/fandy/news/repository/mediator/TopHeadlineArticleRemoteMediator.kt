@@ -1,4 +1,4 @@
-package com.fandy.news.repository
+package com.fandy.news.repository.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -7,12 +7,9 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.fandy.news.api.NewsService
 import com.fandy.news.api.NewsResponse
-import com.fandy.news.api.asHomeArticleModel
-import com.fandy.news.api.asModel
+import com.fandy.news.api.asTopHeadlinesArticleModel
 import com.fandy.news.db.NewsDatabase
 import com.fandy.news.db.RemoteKey
-import com.fandy.news.model.Article
-import com.fandy.news.model.ArticleHome
 import com.fandy.news.model.ArticleTopHeadlines
 import retrofit2.HttpException
 import timber.log.Timber
@@ -28,12 +25,12 @@ import javax.inject.Singleton
  */
 @ExperimentalPagingApi
 @Singleton
-class HomeArticleRemoteMediator @Inject constructor(
-    private val keyword: String,
+class TopHeadlineArticleRemoteMediator @Inject constructor(
     private val language: String,
+    private val category: String,
     private val service: NewsService,
     private val database: NewsDatabase
-) : RemoteMediator<Int, ArticleHome>() {
+) : RemoteMediator<Int, ArticleTopHeadlines>() {
 
     private val typeArticle = "HOME"
     private val remoteKeyDao = database.remoteKeyDao()
@@ -41,7 +38,7 @@ class HomeArticleRemoteMediator @Inject constructor(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleHome>
+        state: PagingState<Int, ArticleTopHeadlines>
     ): MediatorResult {
         try {
             val loadKey: Int = when (loadType) {
@@ -65,7 +62,7 @@ class HomeArticleRemoteMediator @Inject constructor(
 
                     val remoteKey = getRemoteKeyForLastItem(state)
                     if (remoteKey?.nextKey == null)
-                        return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
+                        throw InvalidObjectException("Something went wrong")
                     remoteKey.nextKey
                 }
             }
@@ -75,7 +72,7 @@ class HomeArticleRemoteMediator @Inject constructor(
             // since Retrofit's Coroutine CallAdapter dispatches on a
             // worker thread.
             val apiResponse = newsResponse(loadKey, state)
-            val news = apiResponse.asHomeArticleModel()
+            val news = apiResponse.asTopHeadlinesArticleModel()
             val endOfPaginationReached = news.isEmpty()
 
             // Store loaded data, and next key in transaction, so that
@@ -83,7 +80,7 @@ class HomeArticleRemoteMediator @Inject constructor(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     remoteKeyDao.clearRemoteKeys(typeArticle)
-                    articleDao.clearHomeArticle()
+                    articleDao.clearTopHeadlineArticle()
                 }
 
                 val prevKey = if (loadKey == STARTING_PAGE) null else loadKey - 1
@@ -93,11 +90,11 @@ class HomeArticleRemoteMediator @Inject constructor(
                 }
 
                 for (article in news) {
-                    article.keyword = keyword
                     article.language = language
+                    article.category = category
                 }
 
-                articleDao.insertHomeArticleAll(news)
+                articleDao.insertTopHeadlineArticleAll(news)
                 remoteKeyDao.insertAll(keys)
             }
 
@@ -111,17 +108,17 @@ class HomeArticleRemoteMediator @Inject constructor(
 
     private suspend fun newsResponse(
         loadKey: Int,
-        state: PagingState<Int, ArticleHome>
+        state: PagingState<Int, ArticleTopHeadlines>
     ): NewsResponse {
-        return service.getEverthingArticles(
-            keyword = keyword,
+        return service.getTopArticles(
             language = language,
+            category = category,
             page = loadKey,
             pageSize = state.config.pageSize
         )
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleHome>): RemoteKey? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { articleId ->
                 remoteKeyDao.remoteKeyByArticle(articleId, typeArticle)
@@ -129,7 +126,7 @@ class HomeArticleRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleHome>): RemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
         return state.pages.lastOrNull {
             it.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { lastArticle ->
@@ -137,7 +134,7 @@ class HomeArticleRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleHome>): RemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ArticleTopHeadlines>): RemoteKey? {
         return state.pages.firstOrNull {
             it.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { firstArticle ->

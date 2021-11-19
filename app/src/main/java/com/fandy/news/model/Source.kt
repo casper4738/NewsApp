@@ -11,25 +11,25 @@ import kotlinx.android.parcel.Parcelize
  * Provides a source name for the article.
  */
 @Parcelize
-class Source(val name: String): Parcelable
+class Source(val name: String) : Parcelable
 
 
 /**
  * Convert the Source object to String so DB knows how to insert it.
  */
-class SourceConverter{
+class SourceConverter {
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
     @TypeConverter
-    fun fromString(value: String): Source?{
+    fun fromString(value: String): Source? {
         val adapter: JsonAdapter<Source> = moshi.adapter(Source::class.java)
         return adapter.fromJson(value)
     }
 
     @TypeConverter
-    fun fromSourceToString(type: Source): String{
+    fun fromSourceToString(type: Source): String {
         val adapter: JsonAdapter<Source> = moshi.adapter(Source::class.java)
         return adapter.toJson(type)
     }

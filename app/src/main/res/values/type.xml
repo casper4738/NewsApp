@@ -92,4 +92,5 @@
     <style name="NewsappToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/work_sans_semibold</item>
     </style>
+
 </resources>

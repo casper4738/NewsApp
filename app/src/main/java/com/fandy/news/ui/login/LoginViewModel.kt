@@ -25,8 +25,8 @@ class LoginViewModel @Inject constructor(
     private val myPreference: MyPreference
 ) : ViewModel() {
 
-    private val _errorState = MutableLiveData<ErrorState?>()
-    val errorState: LiveData<ErrorState?>
+    private val _errorState = MutableLiveData<SingleEvent<ErrorState?>>()
+    val errorState: LiveData<SingleEvent<ErrorState?>>
         get() = _errorState
 
     private val _loginUser = MutableLiveData<SingleEvent<LoginUser?>>()
@@ -80,10 +80,10 @@ class LoginViewModel @Inject constructor(
     private fun onError(message: String) {
         myPreference.setStored("login.isLogin", false)
         _errorState.postValue(
-            ErrorState(
+            SingleEvent(ErrorState(
                 status = true,
                 message = message
-            )
+            ))
         )
     }
 

@@ -48,7 +48,7 @@ class LoginFragment : Fragment() {
             }
         })
 
-        loginViewModel.errorState.observe(viewLifecycleOwner) { response ->
+        loginViewModel.errorState.observe(viewLifecycleOwner, EventObserver { response ->
             response?.let {
                 loginReset()
                 showLoginError()
@@ -57,7 +57,7 @@ class LoginFragment : Fragment() {
                     binding.tvErrorMessage.text = response.message
                 }
             }
-        }
+        })
     }
 
     private fun loginLoading() {
@@ -104,7 +104,5 @@ class LoginFragment : Fragment() {
             loginViewModel.login(loginRequest)
         }
     }
-
-
 
 }
